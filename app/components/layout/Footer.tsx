@@ -1,8 +1,8 @@
 import React from 'react'
-import Facebook from '../icons/Facebook'
-import Instagram from '../icons/Instagram'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Facebook02Icon, InstagramIcon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 
 const Footer = () => {
   return (
@@ -32,13 +32,23 @@ const Footer = () => {
                 href="/"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                <Facebook />
+                <HugeiconsIcon
+                  icon={Facebook02Icon}
+                  size={24}
+                  color="currentColor"
+                  strokeWidth={2}
+                />
               </Link>
               <Link
                 href="/"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                <Instagram />
+                <HugeiconsIcon
+                  icon={InstagramIcon}
+                  size={24}
+                  color="currentColor"
+                  strokeWidth={2}
+                />
               </Link>
             </div>
           </div>

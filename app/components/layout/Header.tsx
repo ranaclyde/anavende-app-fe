@@ -1,9 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import ShoppingCart from '../icons/ShoppingCart'
-import Search from '../icons/Search'
-import Menu from '../icons/Menu'
+import { HugeiconsIcon } from '@hugeicons/react'
+import {
+  Menu01Icon,
+  Search02Icon,
+  ShoppingCart01Icon,
+} from '@hugeicons/core-free-icons'
 
 const Header = () => {
   return (
@@ -11,7 +14,12 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <button className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
-            <Menu width={20} height={20} className="w-6 h-6" />
+            <HugeiconsIcon
+              icon={Menu01Icon}
+              size={24}
+              color="currentColor"
+              strokeWidth={2}
+            />
           </button>
           <div className="flex items-center">
             <Image
@@ -63,13 +71,23 @@ const Header = () => {
               type="button"
               className="text-gray-600 hover:text-gray-900 p-2 cursor-pointer"
             >
-              <Search />
+              <HugeiconsIcon
+                icon={Search02Icon}
+                size={24}
+                color="currentColor"
+                strokeWidth={2}
+              />
             </button>
             <button
               type="button"
               className="hidden md:block text-gray-600 hover:text-gray-900 p-2 cursor-pointer"
             >
-              <ShoppingCart />
+              <HugeiconsIcon
+                icon={ShoppingCart01Icon}
+                size={24}
+                color="currentColor"
+                strokeWidth={2}
+              />
             </button>
           </div>
         </div>
