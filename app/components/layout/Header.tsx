@@ -7,11 +7,12 @@ import {
   Search02Icon,
   ShoppingCart01Icon,
 } from '@hugeicons/core-free-icons'
+import Container from '../ui/Container'
 
 const Header = () => {
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Container tag="header">
         <div className="flex justify-between items-center h-16">
           <button className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
             <HugeiconsIcon
@@ -91,7 +92,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </div>
+      </Container>
     </header>
   )
 }
