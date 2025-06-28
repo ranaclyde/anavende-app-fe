@@ -41,7 +41,7 @@ const FeatureItem = ({
 
 const Features = () => {
   return (
-    <section className="mt-4 flex flex-col sm:flex-row justify-center items-stretch">
+    <section className="mt-12 flex flex-col sm:flex-row justify-center items-stretch">
       <FeatureItem
         icon={NewReleasesIcon}
         title="Productos nuevos"
