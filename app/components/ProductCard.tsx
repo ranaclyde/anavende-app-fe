@@ -1,37 +1,63 @@
-/* eslint-disable @next/next/no-img-element */
+import { EyeIcon, ShoppingCart01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import React from 'react'
+import Image from 'next/image'
 
 const ProductCard = () => {
   return (
-    <div className="relative bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow group">
-      <div className="relative aspect-square bg-gray-100 p-2 sm:p-4 overflow-hidden">
-        {/* Imagen */}
-        <img
-          src="https://ext.same-assets.com/3455407330/2011930931.png"
-          alt="Gaming Headphone"
-          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+    <div className="flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:shadow-lg transition-shadow">
+      <a
+        href="#"
+        className="group relative w-full aspect-square overflow-hidden rounded-t-lg"
+      >
+        <Image
+          src="/images/categories/headset.jpg"
+          alt="Headset Nike Air MX Super 2500"
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
-
-        {/* Oscurecimiento del contenedor */}
-        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-        {/* Botones superpuestos */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button className="bg-white text-gray-900 font-medium text-sm sm:text-base px-4 py-2 rounded-md shadow hover:bg-gray-100 transition">
-            Agregar al carrito
-          </button>
-          <button className="text-white text-sm sm:text-base underline hover:text-gray-300 transition">
-            Ver producto
-          </button>
+        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div className="flex items-center justify-center h-full w-full flex-col text-center">
+            <HugeiconsIcon
+              icon={EyeIcon}
+              size={24}
+              color="#fff"
+              strokeWidth={2}
+            />
+            <span className="mt-2 text-white text-sm sm:text-base">
+              Ver detalles
+            </span>
+          </div>
         </div>
-      </div>
+      </a>
 
-      <div className="p-3 sm:p-4">
-        <span className="text-xs text-gray-500 uppercase">Auriculares</span>
-        <h3 className="font-bold text-gray-900 mb-2 text-sm sm:text-base line-clamp-2">
-          Gaming Headphone
-        </h3>
-        <p className="text-sm sm:text-lg font-bold text-[#0989ff]">$130.00</p>
+      <div className="p-4 flex flex-col gap-2">
+        <a href="#">
+          <h5 className="text-xs sm:text-sm lg:text-base font-medium text-slate-900 leading-snug">
+            Nike Air MX Super 2500 - Red
+          </h5>
+        </a>
+        <div className="flex items-center justify-between">
+          <p>
+            <span className="text-xl font-bold text-slate-900">$449</span>
+            <span className="ml-2 text-sm text-slate-500 line-through">
+              $699
+            </span>
+          </p>
+        </div>
+        <a
+          href="#"
+          className="hidden mt-2 sm:flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-slate-500"
+        >
+          <HugeiconsIcon
+            icon={ShoppingCart01Icon}
+            size={20}
+            color="currentColor"
+            strokeWidth={2}
+            className="mr-2"
+          />
+          Agregar al carrito
+        </a>
       </div>
     </div>
   )
