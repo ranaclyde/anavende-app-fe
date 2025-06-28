@@ -3,11 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Facebook02Icon, InstagramIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import Container from '../ui/Container'
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white mt-8 lg:mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+      <Container className="py-8 lg:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <div className="flex items-center">
@@ -160,7 +161,7 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }
