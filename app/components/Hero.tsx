@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 import Container from './ui/Container'
 import SubtitleAnimation from './SubtitleAnimation'
@@ -11,10 +12,10 @@ const Hero = () => {
         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
           <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
             Explora las categorias disponibles.{' '}
-            <a href="#" className="font-semibold text-indigo-600">
+            <Link href="/categorias" className="font-semibold text-indigo-600">
               <span aria-hidden="true" className="absolute inset-0" />
               Leer mas <span aria-hidden="true">&rarr;</span>
-            </a>
+            </Link>
           </div>
         </div>
         <div className="text-center">
@@ -23,8 +24,10 @@ const Hero = () => {
           </h1>
           <SubtitleAnimation />
           <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.
+            Tu tienda de confianza para productos de tecnologia y accesorios.
+            <br />
+            Ofrecemos una amplia gama de productos de alta calidad a precios
+            competitivos.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a

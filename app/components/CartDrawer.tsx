@@ -13,6 +13,7 @@ import {
   MinusSignCircleIcon,
   PlusSignCircleIcon,
 } from '@hugeicons/core-free-icons'
+import ButtonUi from './ui/ButtonUi'
 
 interface CartDrawerProps {
   visible: boolean
@@ -135,9 +136,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                     <span className="font-bold">Total:</span>
                     <span className="font-bold">$0.00</span>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
-                    Proceder al Pago
-                  </button>
+                  <ButtonUi className="w-full">Proceder al Pago</ButtonUi>
                 </div>
               </div>
             </DialogPanel>

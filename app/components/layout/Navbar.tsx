@@ -20,11 +20,10 @@ import clsx from 'clsx'
 import CartDrawer from '../CartDrawer'
 
 const navigation = [
-  { name: 'Inicio', href: '/', current: true },
-  { name: 'Productos', href: '/products', current: false },
-  { name: 'Categorias', href: '/shop', current: false },
-  { name: 'Destacados', href: '/blog', current: false },
-  { name: 'Contacto', href: '/contact', current: false },
+  { name: 'Productos', href: '/productos', current: false },
+  { name: 'Categorias', href: '/categorias', current: false },
+  { name: 'Destacados', href: '/destacados', current: false },
+  { name: 'Contacto', href: '/contacto', current: false },
 ]
 
 const Navbar = () => {
@@ -37,7 +36,7 @@ const Navbar = () => {
     >
       <Container tag="nav">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+          <Link href={'/'} className="flex items-center">
             <Image
               src="/images/logo.png"
               alt="Shofy"
@@ -49,7 +48,7 @@ const Navbar = () => {
             <span className="hidden md:inline ml-2 text-xl font-bold text-[#832833]">
               Ana Vende
             </span>
-          </div>
+          </Link>
           <div className="hidden md:flex space-x-8">
             {navigation.map((nav) => (
               <Link
