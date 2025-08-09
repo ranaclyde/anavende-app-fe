@@ -7,20 +7,20 @@ const categories = [
     id: 1,
     name: 'Auriculares',
     image: '/images/categories/headphones.jpg',
-    href: '/categorias/auriculares'
+    href: '/categorias/auriculares',
   },
   {
     id: 2,
     name: 'Headsets Gaming',
     image: '/images/categories/headset.jpg',
-    href: '/categorias/headsets'
+    href: '/categorias/headsets',
   },
   {
     id: 3,
     name: 'Mouses',
     image: '/images/categories/mouses.jpg',
-    href: '/categorias/mouses'
-  }
+    href: '/categorias/mouses',
+  },
 ]
 
 export default function CategoriesPage() {
@@ -28,7 +28,7 @@ export default function CategoriesPage() {
     <main>
       <Breadcrumbs links={[{ href: '#', label: 'Categorias' }]} />
       <Container tag="section" className="mt-8">
-        <div className="text-center">
+        <div>
           <h1 className="text-3xl font-bold text-gray-900">Categorias</h1>
           <p className="mt-4 text-lg text-gray-600">
             Descubre nuestras categorias de productos
