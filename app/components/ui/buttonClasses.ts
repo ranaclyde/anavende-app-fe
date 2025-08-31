@@ -71,6 +71,54 @@ export const variantClasses = {
       'disabled:disabled:bg-transparent disabled:text-blue-400 disabled:opacity-40',
     ],
   },
+  merlot: {
+    default: [
+      'text-white',
+      'bg-merlot',
+      'hover:bg-merlot-700',
+      'disabled:bg-merlot disabled:opacity-40',
+    ],
+    outlined: [
+      'text-merlot-500',
+      'border border-merlot-500',
+      'hover:text-white hover:bg-merlot-500',
+      'disabled:disabled:bg-transparent disabled:text-merlot-400 disabled:opacity-40',
+    ],
+    ghost: [
+      'text-merlot-600',
+      'hover:bg-merlot-100 hover:bg-opacity-10',
+      'disabled:disabled:bg-transparent disabled:text-merlot-400 disabled:opacity-40',
+    ],
+    link: [
+      'text-merlot-600',
+      'hover:underline hover:underline-offset-2',
+      'disabled:disabled:bg-transparent disabled:text-merlot-400 disabled:opacity-40',
+    ],
+  },
+  'hippie-blue': {
+    default: [
+      'text-white',
+      'bg-hippie-blue',
+      'hover:bg-hippie-blue-700',
+      'disabled:bg-hippie-blue disabled:opacity-40',
+    ],
+    outlined: [
+      'text-hippie-blue-500',
+      'border border-hippie-blue-500',
+      'hover:text-white hover:bg-hippie-blue-500',
+      'disabled:disabled:bg-transparent disabled:text-hippie-blue-400 disabled:opacity-40',
+    ],
+    ghost: [
+      'text-hippie-blue-600',
+      'hover:bg-hippie-blue-100 hover:bg-opacity-10',
+      'disabled:disabled:bg-transparent disabled:text-hippie-blue-400 disabled:opacity-40',
+    ],
+    link: [
+      'text-hippie-blue-600',
+      'hover:underline hover:underline-offset-2',
+      'disabled:disabled:bg-transparent disabled:text-hippie-blue-400 disabled:opacity-40',
+    ],
+  },
 }
 
 export const shapeClasses = {

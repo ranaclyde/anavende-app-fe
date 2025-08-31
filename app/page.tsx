@@ -15,15 +15,6 @@ export default function Home() {
       </Container>
       <Container tag="section" className="mt-16">
         <TitleDivider
-          title="Categorias"
-          btnText="Ver todas"
-          href="/categorias"
-        />
-        <GridCategorias />
-      </Container>
-      <Brands />
-      <Container tag="section" className="mt-12">
-        <TitleDivider
           title="Productos destacados"
           btnText="Ver todos"
           href="/destacados"
@@ -34,6 +25,17 @@ export default function Home() {
           <ProductCard />
           <ProductCard />
         </div>
+      </Container>
+
+      <Brands />
+
+      <Container tag="section" className="mt-16">
+        <TitleDivider
+          title="Categorias"
+          btnText="Ver todas"
+          href="/categorias"
+        />
+        <GridCategorias />
       </Container>
     </main>
   )

@@ -30,7 +30,7 @@ const ProductCard = () => {
             <HugeiconsIcon
               icon={FavouriteIcon}
               size={20}
-              className="text-indigo-600"
+              className="text-merlot"
               strokeWidth={1.5}
             />
           </button>
@@ -43,7 +43,7 @@ const ProductCard = () => {
             <HugeiconsIcon
               icon={ShoppingCart01Icon}
               size={20}
-              className="text-indigo-600"
+              className="text-merlot"
               strokeWidth={1.5}
             />
           </button>

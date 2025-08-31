@@ -136,7 +136,9 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                     <span className="font-bold">Total:</span>
                     <span className="font-bold">$0.00</span>
                   </div>
-                  <ButtonUi className="w-full">Proceder al Pago</ButtonUi>
+                  <ButtonUi color="merlot" className="w-full">
+                    Proceder al Pago
+                  </ButtonUi>
                 </div>
               </div>
             </DialogPanel>
