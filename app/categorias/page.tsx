@@ -1,8 +1,10 @@
 import GridCategorias from '../components/GridCategories'
 import Breadcrumbs from '../components/layout/Breadcrumbs'
 import Container from '../components/ui/Container'
+import { getCategories } from '../services/categories'
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+  const categories = await getCategories()
   return (
     <main>
       <Breadcrumbs links={[{ href: '#', label: 'Categorias' }]} />
@@ -13,7 +15,7 @@ export default function CategoriesPage() {
             Descubre nuestras categorias de productos
           </p>
         </div>
-        <GridCategorias />
+        <GridCategorias categories={categories} />
         <div className="mt-8 text-center">
           <p className="text-gray-500">
             No encuentras lo que buscas?{' '}

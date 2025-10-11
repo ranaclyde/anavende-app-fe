@@ -14,9 +14,9 @@ const Footer = () => {
             <div className="flex items-center">
               <Image
                 src="/images/logo.png"
-                alt="Shofy"
-                className="h-8 w-auto bg-white p-1 rounded"
-                width={123}
+                alt="Ana vende logo"
+                className="bg-white p-1 rounded"
+                width={32}
                 height={32}
                 priority
               />

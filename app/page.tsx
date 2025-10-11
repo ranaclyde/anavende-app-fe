@@ -5,8 +5,10 @@ import Features from './components/Features'
 import Container from './components/ui/Container'
 import Brands from './components/Brands'
 import Hero from './components/Hero'
+import { getHighlightedCategories } from './services/categories'
 
-export default function Home() {
+export default async function Home() {
+  const highlightedCategories = await getHighlightedCategories()
   return (
     <main>
       <Hero />
@@ -35,7 +37,7 @@ export default function Home() {
           btnText="Ver todas"
           href="/categorias"
         />
-        <GridCategorias />
+        <GridCategorias categories={highlightedCategories} />
       </Container>
     </main>
   )

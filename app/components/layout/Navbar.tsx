@@ -39,9 +39,8 @@ const Navbar = () => {
           <Link href={'/'} className="flex items-center">
             <Image
               src="/images/logo.png"
-              alt="Shofy"
-              className="h-8 w-auto"
-              width={123}
+              alt="Ana vende logo"
+              width={32}
               height={32}
               priority
             />

@@ -1,7 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
+
+const { STRAPI_API_URL } = process.env
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  images: {
+    remotePatterns: [new URL(`${STRAPI_API_URL}/uploads/**`)],
+  },
+}
 
-export default nextConfig;
+export default nextConfig
