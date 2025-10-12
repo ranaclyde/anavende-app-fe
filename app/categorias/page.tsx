@@ -1,10 +1,34 @@
+'use client'
+// Libraries
+import { useEffect, useState } from 'react'
+import { useShallow } from 'zustand/shallow'
+
+// Components
 import GridCategorias from '../components/GridCategories'
 import Breadcrumbs from '../components/layout/Breadcrumbs'
 import Container from '../components/ui/Container'
-import { getCategories } from '../services/categories'
 
-export default async function CategoriesPage() {
-  const categories = await getCategories()
+// Store
+import useCategoryStore from '../store/categories'
+
+export default function CategoriesPage() {
+  const { getCategories, categories } = useCategoryStore(
+    useShallow((state) => ({
+      getCategories: state.getCategories,
+      categories: state.categories,
+    }))
+  )
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const init = async () => {
+      setIsLoading(true)
+      await getCategories()
+      setIsLoading(false)
+    }
+    if (!categories.length) init()
+  }, [])
+
   return (
     <main>
       <Breadcrumbs links={[{ href: '#', label: 'Categorias' }]} />

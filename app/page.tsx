@@ -1,3 +1,9 @@
+'use client'
+// Libraries
+import { useState, useEffect } from 'react'
+import { useShallow } from 'zustand/shallow'
+
+// Components
 import GridCategorias from './components/GridCategories'
 import ProductCard from './components/ProductCard'
 import TitleDivider from './components/TitleDivider'
@@ -5,10 +11,28 @@ import Features from './components/Features'
 import Container from './components/ui/Container'
 import Brands from './components/Brands'
 import Hero from './components/Hero'
-import { getHighlightedCategories } from './services/categories'
 
-export default async function Home() {
-  const highlightedCategories = await getHighlightedCategories()
+// Store
+import useCategoryStore from './store/categories'
+
+export default function Home() {
+  const { getHighlightedCategories, highlightedCategories } = useCategoryStore(
+    useShallow((state) => ({
+      getHighlightedCategories: state.getHighlightedCategories,
+      highlightedCategories: state.highlightedCategories,
+    }))
+  )
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const init = async () => {
+      setIsLoading(true)
+      await getHighlightedCategories()
+      setIsLoading(false)
+    }
+    if (!highlightedCategories.length) init()
+  }, [])
+
   return (
     <main>
       <Hero />
