@@ -1,5 +1,5 @@
 import { type Category } from '../interfaces/categories'
-import { strapiQuery } from './strapi'
+import { getImageUrl, strapiQuery } from './strapi'
 
 export async function getCategoriesService(): Promise<Category[]> {
   const res = await strapiQuery(
@@ -7,7 +7,7 @@ export async function getCategoriesService(): Promise<Category[]> {
   )
   return res.data.map((category: any) => {
     const { name, slug, image: rawImage } = category
-    const image = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${rawImage.url}`
+    const image = getImageUrl(rawImage.url)
     return { name, slug, image }
   })
 }
@@ -19,7 +19,7 @@ export function getHighlightedCategoriesService(): Promise<Category[]> {
   ).then((res) => {
     return res.data.map((category: any) => {
       const { name, slug, image: rawImage } = category
-      const image = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${rawImage.url}`
+      const image = getImageUrl(rawImage.url)
       return { name, slug, image }
     })
   })
