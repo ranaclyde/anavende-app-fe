@@ -23,10 +23,10 @@ export interface ProductStock {
   id: number
   quantity: number
   colors: Color[]
-  images: Image[]
+  images: ProductImage[]
 }
 
-interface Image {
+export interface ProductImage {
   id: number
   documentId: string
   url: string

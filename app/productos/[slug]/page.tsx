@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getProductBySlugService } from '@/services/products'
-import ProductDetailContent from './ProductDetailContent'
+import ProductDetailContent from '@/containers/product-detail/ProductDetailContent'
 
 interface Props {
   params: Promise<{ slug: string }>
