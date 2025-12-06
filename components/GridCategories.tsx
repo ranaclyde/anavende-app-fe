@@ -1,4 +1,4 @@
-import { type Category } from '../interfaces/categories'
+import { type Category } from '@/interfaces/categories'
 import CategoryCard from './CategoryCard'
 
 interface GridCategoriasProps {

@@ -1,10 +1,10 @@
 import { create } from 'zustand'
 
-import { type Category } from '../interfaces/categories'
+import { type Category } from '@/interfaces/categories'
 import {
   getCategoriesService,
   getHighlightedCategoriesService,
-} from '../services/categories'
+} from '@/services/categories'
 
 type State = {
   categories: Category[]

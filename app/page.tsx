@@ -4,16 +4,16 @@ import { useState, useEffect } from 'react'
 import { useShallow } from 'zustand/shallow'
 
 // Components
-import GridCategorias from './components/GridCategories'
-import ProductCard from './components/ProductCard'
-import TitleDivider from './components/TitleDivider'
-import Features from './components/Features'
-import Container from './components/ui/Container'
-import Brands from './components/Brands'
-import Hero from './components/Hero'
+import GridCategorias from '@/components/GridCategories'
+import ProductCard from '@/components/ProductCard'
+import TitleDivider from '@/components/TitleDivider'
+import Features from '@/components/Features'
+import Container from '@/components/ui/Container'
+import Brands from '@/components/Brands'
+import Hero from '@/components/Hero'
 
 // Store
-import useCategoryStore from './store/categories'
+import useCategoryStore from '@/store/categories'
 
 export default function Home() {
   const { getHighlightedCategories, highlightedCategories } = useCategoryStore(

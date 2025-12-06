@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
 // Components
-import GridCategorias from '../components/GridCategories'
-import Breadcrumbs from '../components/layout/Breadcrumbs'
-import Container from '../components/ui/Container'
+import GridCategorias from '@/components/GridCategories'
+import Breadcrumbs from '@/components/layout/Breadcrumbs'
+import Container from '@/components/ui/Container'
 
 // Store
-import useCategoryStore from '../store/categories'
+import useCategoryStore from '@/store/categories'
 
 export default function CategoriesPage() {
   const { getCategories, categories } = useCategoryStore(

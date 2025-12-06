@@ -1,4 +1,4 @@
-import { type Category } from '../interfaces/categories'
+import { type Category } from '@/interfaces/categories'
 import { getImageUrl, strapiQuery } from './strapi'
 
 export async function getCategoriesService(): Promise<Category[]> {

@@ -22,9 +22,9 @@ import {
   MenuItems,
   Input,
 } from '@headlessui/react'
-import Breadcrumbs from '../components/layout/Breadcrumbs'
-import Container from '../components/ui/Container'
-import ProductCard from '../components/ProductCard'
+import Breadcrumbs from '@/components/layout/Breadcrumbs'
+import Container from '@/components/ui/Container'
+import ProductCard from '@/components/ProductCard'
 
 // Datos de ejemplo para los filtros
 const categories = [

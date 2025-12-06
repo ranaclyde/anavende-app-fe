@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getProductBySlugService } from '@/app/services/products'
+import { getProductBySlugService } from '@/services/products'
 import ProductDetailContent from './ProductDetailContent'
 
 interface Props {

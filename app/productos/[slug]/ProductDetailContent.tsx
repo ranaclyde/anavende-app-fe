@@ -21,12 +21,12 @@ import {
 } from '@hugeicons/core-free-icons'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer'
 
-import Container from '../../components/ui/Container'
-import Breadcrumbs from '../../components/layout/Breadcrumbs'
-import ButtonUi from '../../components/ui/ButtonUi'
-//import ProductCard from '../../components/ProductCard'
+import Container from '@/components/ui/Container'
+import Breadcrumbs from '@/components/layout/Breadcrumbs'
+import ButtonUi from '@/components/ui/ButtonUi'
+//import ProductCard from '@/components/ProductCard'
 
-import { SimpleProduct } from '@/app/interfaces/products'
+import { SimpleProduct } from '@/interfaces/products'
 
 interface Props {
   product: SimpleProduct

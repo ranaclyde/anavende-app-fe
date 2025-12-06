@@ -1,4 +1,4 @@
-import { type SimpleProduct } from './../interfaces/products'
+import { type SimpleProduct } from '@/interfaces/products'
 import { getImageUrl, strapiQuery } from './strapi'
 
 // Helper para construir queries de Strapi más legibles
