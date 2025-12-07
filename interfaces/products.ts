@@ -31,3 +31,12 @@ export interface ProductImage {
   documentId: string
   url: string
 }
+
+export type ProductSearchParams = {
+  category?: string // slug de categoría
+  brand?: string // slug de marca
+  search?: string // texto libre (name o description)
+  sort?: 'recent' | 'price_asc' | 'price_desc'
+  page?: number
+  pageSize?: number
+}
