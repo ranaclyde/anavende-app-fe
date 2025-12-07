@@ -51,7 +51,7 @@ const ProductCard = () => {
       </div>
 
       <div className="p-4 flex flex-col gap-2">
-        <span className="w-fit bg-[#4A90A4] text-white text-xs px-2.5 py-0.5 rounded-sm">
+        <span className="w-fit bg-hippie-blue text-white text-xs px-2.5 py-0.5 rounded-sm">
           Auriculares
         </span>
         <h5 className="text-xs sm:text-sm lg:text-base font-medium text-slate-900 leading-snug">

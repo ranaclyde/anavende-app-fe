@@ -7,17 +7,19 @@ import {
   Cancel01Icon,
   Menu01Icon,
   Search02Icon,
-  ShoppingCart01Icon,
+  ShoppingCart02Icon,
 } from '@hugeicons/core-free-icons'
-
-import Container from '../ui/Container'
 import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react'
+import { useShallow } from 'zustand/shallow'
 import clsx from 'clsx'
+
+import Container from '../ui/Container'
 import CartDrawer from '../CartDrawer'
+import useShoppingCartStore from '@/store/shoppingCart'
 
 const navigation = [
   { name: 'Productos', href: '/productos', current: false },
@@ -28,6 +30,11 @@ const navigation = [
 
 const Navbar = () => {
   const [cartOpen, setCartOpen] = useState(false)
+  const { shoppingCart } = useShoppingCartStore(
+    useShallow((state) => ({
+      shoppingCart: state.shoppingCart,
+    }))
+  )
 
   return (
     <Disclosure
@@ -77,13 +84,16 @@ const Navbar = () => {
               onClick={() => setCartOpen(!cartOpen)}
             >
               <HugeiconsIcon
-                icon={ShoppingCart01Icon}
+                icon={ShoppingCart02Icon}
                 size={24}
                 color="currentColor"
                 strokeWidth={2}
               />
               <span className="absolute -top-0 -right-1 bg-red-500 text-white rounded-full text-xs flex items-center justify-center h-5 w-5">
-                0
+                {shoppingCart.items.reduce(
+                  (total, item) => total + item.quantity,
+                  0
+                )}
               </span>
             </button>
             {/* Mobile menu button*/}

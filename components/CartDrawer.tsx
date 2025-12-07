@@ -13,7 +13,11 @@ import {
   MinusSignCircleIcon,
   PlusSignCircleIcon,
 } from '@hugeicons/core-free-icons'
+import { useShallow } from 'zustand/shallow'
+
 import ButtonUi from './ui/ButtonUi'
+
+import useShoppingCartStore from '@/store/shoppingCart'
 
 interface CartDrawerProps {
   visible: boolean
@@ -21,16 +25,15 @@ interface CartDrawerProps {
 }
 
 const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
-  const cart = [
-    {
-      id: 3,
-      name: 'Zapatillas Deportivas',
-      price: 89.99,
-      image:
-        'https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1840619_1280.jpg',
-      quantity: 2,
-    },
-  ]
+  const { shoppingCart, incrementQuantity, decrementQuantity, removeItem } =
+    useShoppingCartStore(
+      useShallow((state) => ({
+        shoppingCart: state.shoppingCart,
+        incrementQuantity: state.incrementQuantity,
+        decrementQuantity: state.decrementQuantity,
+        removeItem: state.removeItem,
+      }))
+    )
 
   return (
     <Dialog open={visible} onClose={onClose} className="relative z-50">
@@ -70,18 +73,18 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                   Tu Carrito
                 </DialogTitle>
                 <div className="relative flex-1 overflow-y-auto p-4">
-                  {cart.length === 0 ? (
+                  {shoppingCart.items.length === 0 ? (
                     <div className="flex items-center justify-center h-full text-gray-500">
                       Tu carrito está vacío
                     </div>
                   ) : (
-                    cart.map((item) => (
+                    shoppingCart.items.map((item) => (
                       <div
-                        key={item.id}
+                        key={item.productId}
                         className="flex items-center py-4 border-b-[0.5px] border-gray-300"
                       >
                         <img
-                          src={item.image}
+                          src={item.imagenUrl}
                           alt={item.name}
                           className="w-16 h-16 object-cover rounded"
                         />
@@ -98,7 +101,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                             </div>
                           </div>
                           <div className="flex items-center mt-2">
-                            <button className="text-gray-500 hover:text-blue-600">
+                            <button
+                              className="text-gray-500 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                              onClick={() => decrementQuantity(item.productId)}
+                              disabled={item.quantity <= 1}
+                            >
                               <HugeiconsIcon
                                 icon={MinusSignCircleIcon}
                                 size={16}
@@ -109,7 +116,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                             <span className="mx-2 text-sm">
                               {item.quantity}
                             </span>
-                            <button className="text-gray-500 hover:text-blue-600">
+                            <button
+                              className="text-gray-500 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                              onClick={() => incrementQuantity(item.productId)}
+                              disabled={item.quantity >= item.maxStock}
+                            >
                               <HugeiconsIcon
                                 icon={PlusSignCircleIcon}
                                 size={16}
@@ -117,7 +128,10 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                                 strokeWidth={2}
                               />
                             </button>
-                            <button className="ml-auto text-red-500 hover:text-red-700">
+                            <button
+                              className="ml-auto text-red-500 hover:text-red-700"
+                              onClick={() => removeItem(item.productId)}
+                            >
                               <HugeiconsIcon
                                 icon={Delete02Icon}
                                 size={16}
@@ -134,9 +148,15 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                 <div className="p-4 border-t-[0.5px] border-gray-300">
                   <div className="flex justify-between mb-4">
                     <span className="font-bold">Total:</span>
-                    <span className="font-bold">$0.00</span>
+                    <span className="font-bold">
+                      ${shoppingCart.totalPrice.toFixed(2)}
+                    </span>
                   </div>
-                  <ButtonUi color="merlot" className="w-full">
+                  <ButtonUi
+                    color="merlot"
+                    className="w-full"
+                    disabled={shoppingCart.items.length === 0}
+                  >
                     Proceder al Pago
                   </ButtonUi>
                 </div>

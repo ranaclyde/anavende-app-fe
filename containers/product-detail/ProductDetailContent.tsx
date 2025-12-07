@@ -4,23 +4,26 @@ import Link from 'next/link'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   FavouriteIcon,
-  ShoppingCart01Icon,
-  MinusSignIcon,
-  PlusSignIcon,
+  ShoppingCartAdd02Icon,
   Share08Icon,
   ArrowLeft01Icon,
 } from '@hugeicons/core-free-icons'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer'
+import { useShallow } from 'zustand/shallow'
+import { clsx } from 'clsx'
 
 import Container from '@/components/ui/Container'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 import ButtonUi from '@/components/ui/ButtonUi'
+import CartDrawer from '@/components/CartDrawer'
 //import ProductCard from '@/components/ProductCard'
 import ImageViewer from './components/ImageViewer'
 import PaymentMethods from './components/PaymentMethods'
 import ColorButtons from './components/ColorButtons'
+import UnitySelect from './components/UnitySelect'
 
 import { type SimpleProduct } from '@/interfaces/products'
+import useShoppingCartStore from '@/store/shoppingCart'
 
 interface Props {
   product: SimpleProduct
@@ -30,11 +33,24 @@ export default function ProductDetailContent({ product }: Props) {
   const [selectedStockIndex, setSelectedStockIndex] = useState(0)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
+  const [cartOpen, setCartOpen] = useState(false)
+
+  const { setItem, shoppingCart } = useShoppingCartStore(
+    useShallow((state) => ({
+      setItem: state.setItem,
+      shoppingCart: state.shoppingCart,
+    }))
+  )
 
   const selectedStock = product.stock[selectedStockIndex]
   const availableQuantity = selectedStock.quantity
   const currentImages = selectedStock.images
   const inStock = availableQuantity > 0
+
+  // Verificar si el producto ya está en el carrito
+  const isInCart = shoppingCart.items.some(
+    (item) => item.productId === product.id
+  )
 
   // Calcular precio con descuento si aplica
   const finalPrice = useMemo(() => {
@@ -55,6 +71,28 @@ export default function ProductDetailContent({ product }: Props) {
   const handleStockChange = (index: number) => {
     setSelectedStockIndex(index)
     setSelectedImageIndex(0)
+    setQuantity(1)
+  }
+
+  const handleAddToCart = () => {
+    if (!inStock) return
+
+    const imageUrl =
+      currentImages.length > 0
+        ? currentImages[0].url
+        : '/images/placeholder.jpg'
+
+    setItem({
+      productId: product.id,
+      quantity: quantity,
+      price: finalPrice,
+      imagenUrl: imageUrl,
+      name: product.name,
+      color: selectedStock.colors[0],
+      maxStock: availableQuantity,
+    })
+
+    // Resetear cantidad después de agregar
     setQuantity(1)
   }
 
@@ -95,12 +133,12 @@ export default function ProductDetailContent({ product }: Props) {
           />
 
           {/* Información del producto */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div>
               {/* Categoría, marca y botones de acción superior */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="bg-[#4A90A4] text-white text-xs px-2.5 py-0.5 rounded-sm">
+                  <span className="bg-hippie-blue text-white text-xs px-2.5 py-0.5 rounded-sm">
                     {product.categories[0]?.name || 'Sin Categoría'}
                   </span>
                   <span className="text-gray-500 text-sm">
@@ -123,38 +161,40 @@ export default function ProductDetailContent({ product }: Props) {
               </h1>
             </div>
 
-            {/* Stock */}
-            <div className="flex items-center gap-2">
-              <div
-                className={`w-3 h-3 rounded-full ${
-                  inStock ? 'bg-green-500' : 'bg-red-500'
-                }`}
-              />
-              <span
-                className={`text-sm ${
-                  inStock ? 'text-green-600' : 'text-red-600'
-                }`}
-              >
-                {inStock
-                  ? `En stock (${availableQuantity} disponibles)`
-                  : 'Sin stock'}
-              </span>
-            </div>
-
-            {/* Precio */}
-            <div className="flex items-center gap-3">
-              <span className="text-4xl text-[#832833]">
-                ${finalPrice.toFixed(2)}
-              </span>
-              {product.discount && product.discount > 0 ? (
-                <span className="text-lg text-gray-500 line-through">
-                  ${product.price.toFixed(2)}
+            <div className="space-y-1">
+              {/* Precio */}
+              <div className="flex items-end gap-3">
+                <span className="text-4xl text-[#832833]">
+                  ${finalPrice.toFixed(2)}
                 </span>
-              ) : null}
+                {product.discount && product.discount > 0 ? (
+                  <span className="text-lg text-gray-500 line-through">
+                    ${product.price.toFixed(2)}
+                  </span>
+                ) : null}
+              </div>
+              {/* Stock */}
+              <div className="flex items-center gap-2">
+                <div
+                  className={clsx(
+                    'w-3 h-3 rounded-full',
+                    inStock ? 'bg-green-500' : 'bg-red-500'
+                  )}
+                />
+                <span
+                  className={clsx(
+                    'text-sm',
+                    inStock ? 'text-green-600' : 'text-red-600'
+                  )}
+                >
+                  {inStock
+                    ? `En stock (${availableQuantity} disponibles)`
+                    : 'Sin stock'}
+                </span>
+              </div>
+              {/* Link para medios de pago */}
+              <PaymentMethods />
             </div>
-
-            {/* Link para medios de pago */}
-            <PaymentMethods />
 
             {/* Colores */}
             {product.stock.length > 0 && (
@@ -174,36 +214,48 @@ export default function ProductDetailContent({ product }: Props) {
             )}
 
             {/* Cantidad y botón de compra */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-medium text-gray-900">Cantidad:</h3>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center border border-gray-300 rounded-lg">
-                  <button
-                    onClick={() => handleQuantityChange('decrement')}
-                    disabled={quantity <= 1}
-                    className="p-2 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <HugeiconsIcon icon={MinusSignIcon} size={16} />
-                  </button>
-                  <span className="px-4 py-2 text-center min-w-[3rem]">
-                    {quantity}
-                  </span>
-                  <button
-                    onClick={() => handleQuantityChange('increment')}
-                    disabled={quantity >= availableQuantity}
-                    className="p-2 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <HugeiconsIcon icon={PlusSignIcon} size={16} />
-                  </button>
-                </div>
+            <div className="space-y-5">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-gray-900">
+                  Cantidad:
+                </span>
+                <UnitySelect
+                  availableQuantity={availableQuantity}
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                />
+              </div>
+              <div className="space-y-2">
                 <ButtonUi
                   color="merlot"
-                  className="flex-1 flex items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-2 w-60"
                   disabled={!inStock}
+                  onClick={handleAddToCart}
                 >
-                  <HugeiconsIcon icon={ShoppingCart01Icon} size={20} />
-                  Añadir al carrito
+                  Comprar ahora
                 </ButtonUi>
+                <div className="flex items-center gap-3">
+                  <ButtonUi
+                    color="merlot"
+                    variant="outlined"
+                    className="flex items-center justify-center gap-2 w-60"
+                    disabled={!inStock}
+                    onClick={handleAddToCart}
+                  >
+                    <HugeiconsIcon icon={ShoppingCartAdd02Icon} size={20} />
+                    Agregar al carrito
+                  </ButtonUi>
+                  {isInCart && (
+                    <ButtonUi
+                      color="info"
+                      variant="link"
+                      className="flex items-center justify-center gap-2"
+                      onClick={() => setCartOpen(true)}
+                    >
+                      Ver carrito
+                    </ButtonUi>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -235,6 +287,8 @@ export default function ProductDetailContent({ product }: Props) {
           </div>
         </div>*/}
       </Container>
+
+      <CartDrawer visible={cartOpen} onClose={() => setCartOpen(false)} />
     </main>
   )
 }

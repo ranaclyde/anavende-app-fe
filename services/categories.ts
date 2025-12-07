@@ -3,7 +3,7 @@ import { getImageUrl, strapiQuery } from './strapi'
 
 export async function getCategoriesService(): Promise<Category[]> {
   const res = await strapiQuery(
-    'categories?fields[0]=name&fields[1]=slug&populate[image][fields][0]=url'
+    'categories?fields[0]=name&fields[1]=slug&populate[image][fields][0]=url&sort=name:asc'
   )
   return res.data.map((category: any) => {
     const { name, slug, image: rawImage } = category
