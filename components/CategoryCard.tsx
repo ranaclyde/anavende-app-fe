@@ -1,16 +1,17 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface CategoryCardProps {
   name: string
   image: string
-  href: string
+  slug: string
 }
 
-const CategoryCard = ({ name, image, href }: CategoryCardProps) => {
+const CategoryCard = ({ name, image, slug }: CategoryCardProps) => {
   return (
-    <a
-      href={href}
+    <Link
+      href={`/productos?category=${slug}`}
       className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden"
     >
       <div className="aspect-square relative">
@@ -27,7 +28,7 @@ const CategoryCard = ({ name, image, href }: CategoryCardProps) => {
           {name}
         </h3>
       </div>
-    </a>
+    </Link>
   )
 }
 

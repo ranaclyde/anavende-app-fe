@@ -95,7 +95,10 @@ const Filters = () => {
         <RadioGroup value={selectedCategory} onChange={handleCategoryChange}>
           <div className="space-y-2">
             {categories.map((category) => (
-              <Field key={category.id} className="flex items-center">
+              <Field
+                key={`${category.id}-${category.slug}`}
+                className="flex items-center"
+              >
                 <Radio
                   value={category.slug}
                   className="group flex size-4 items-center justify-center rounded-full border border-gray-300 bg-white data-[checked]:border-indigo-600"
@@ -116,7 +119,10 @@ const Filters = () => {
         <h3 className="text-sm font-medium text-gray-900 mb-3">Marcas</h3>
         <div className="space-y-2">
           {brands.map((brand) => (
-            <Field key={brand.id} className="flex items-center">
+            <Field
+              key={`${brand.id}-${brand.slug}`}
+              className="flex items-center"
+            >
               <Checkbox
                 checked={selectedBrands.includes(brand.slug)}
                 onChange={() => handleBrandChange(brand.slug)}

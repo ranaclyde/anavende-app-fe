@@ -45,12 +45,13 @@ export default function Home() {
           btnText="Ver todos"
           href="/destacados"
         />
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-6">
+        {/*<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-6">
           <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
         </div>
+        */}
       </Container>
 
       <Brands />

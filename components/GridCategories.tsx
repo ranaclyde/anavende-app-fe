@@ -15,7 +15,7 @@ export default function GridCategorias({ categories }: GridCategoriasProps) {
           key={cat.slug}
           name={cat.name}
           image={cat.image}
-          href="#"
+          slug={cat.slug}
         />
       ))}
     </div>

@@ -102,7 +102,7 @@ export default function ProductDetailContent({ product }: Props) {
         links={[
           { href: '/productos', label: 'Productos' },
           {
-            href: `/categorias/${product.categories[0]?.slug}`,
+            href: `/productos?category=${product.categories[0]?.slug}`,
             label: product.categories[0]?.name || 'Sin Categoría',
           },
           { href: '#', label: product.name },
