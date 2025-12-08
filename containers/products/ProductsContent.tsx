@@ -21,28 +21,20 @@ import Pagination from './components/Pagination'
 import Filters from './components/Filters'
 import SortButton from './components/SortButton'
 
-export const ProductsContent = () => {
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([])
+import { type SimpleProduct } from '@/interfaces/products'
+import { type Pagination as PaginationType } from '@/interfaces/pagination'
+
+interface ProductsContentProps {
+  products?: SimpleProduct[]
+  pagination?: PaginationType
+}
+
+export const ProductsContent = ({
+  products = [],
+  pagination,
+}: ProductsContentProps) => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortBy, setSortBy] = useState('newest')
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category)
-  }
-
-  const handleBrandChange = (brand: string) => {
-    setSelectedBrands((prev) =>
-      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
-    )
-  }
-
-  const clearAllFilters = () => {
-    setSelectedCategory('')
-    setSelectedBrands([])
-    setSearchTerm('')
-  }
 
   return (
     <main>
@@ -97,13 +89,7 @@ export const ProductsContent = () => {
                     </TransitionChild>
                     <div className="flex h-full flex-col bg-white shadow-xl">
                       <div className="flex-1 overflow-y-auto p-6">
-                        <Filters
-                          clearAllFilters={clearAllFilters}
-                          handleCategoryChange={handleCategoryChange}
-                          handleBrandChange={handleBrandChange}
-                          selectedCategory={selectedCategory}
-                          selectedBrands={selectedBrands}
-                        />
+                        <Filters />
                       </div>
                     </div>
                   </DialogPanel>
@@ -115,13 +101,7 @@ export const ProductsContent = () => {
           {/* Desktop Sidebar - Filtros */}
           <aside className="hidden lg:block w-80">
             <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <Filters
-                clearAllFilters={clearAllFilters}
-                handleCategoryChange={handleCategoryChange}
-                handleBrandChange={handleBrandChange}
-                selectedCategory={selectedCategory}
-                selectedBrands={selectedBrands}
-              />
+              <Filters />
             </div>
           </aside>
 
@@ -148,28 +128,33 @@ export const ProductsContent = () => {
 
                 {/* Ordenamiento */}
                 <div className="sm:w-48">
-                  <SortButton sortBy={sortBy} setSortBy={setSortBy} />
+                  <SortButton />
                 </div>
               </div>
             </div>
 
             {/* Grid de productos */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Repetimos ProductCard para mostrar varios productos */}
-              {Array.from({ length: 12 }).map((_, index) => (
-                <ProductCard key={index} />
-              ))}
-            </div>
-
-            {/* Paginación */}
-            <div className="mt-8 flex flex-col items-center justify-center">
-              <div className="mb-4">
+            {products.length === 0 ? (
+              <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  No se encontraron productos
+                </h3>
                 <p className="text-sm text-gray-600">
-                  Mostrando 1-12 de 48 productos
+                  No hay productos que coincidan con los filtros seleccionados.
                 </p>
               </div>
-              <Pagination />
-            </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+
+                {/* Paginación (placeholder) */}
+                <Pagination pagination={pagination} />
+              </>
+            )}
           </div>
         </div>
       </Container>

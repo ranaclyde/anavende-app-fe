@@ -1,11 +1,14 @@
 import { getImageUrl, strapiQuery } from './strapi'
 import { ProductSearchParams, type SimpleProduct } from '@/interfaces/products'
+import { type Pagination } from '@/interfaces/pagination'
 import {
   buildProductsQuery,
   buildProductsSearchQuery,
 } from '@/utils/productParams'
 
-export async function getProductsService(params: ProductSearchParams = {}) {
+export async function getProductsService(
+  params: ProductSearchParams = {}
+): Promise<{ products: SimpleProduct[]; pagination: Pagination }> {
   const searchQuery = buildProductsSearchQuery(params)
   const baseQuery = buildProductsQuery()
 
@@ -13,24 +16,33 @@ export async function getProductsService(params: ProductSearchParams = {}) {
 
   const res = await strapiQuery(url)
 
-  return res.data.map((product: SimpleProduct) => {
-    // Mapear las imágenes del stock como en getProductBySlugService
+  let productsResponse: SimpleProduct[] = []
 
-    const stock =
-      product.stock?.map((stockItem) => {
-        const images = stockItem.images?.map((img) => ({
-          ...img,
-          url: getImageUrl(img.url),
-        }))
+  if (res.data || res.data.length > 0) {
+    productsResponse = res.data.map((product: SimpleProduct) => {
+      // Mapear las imágenes del stock como en getProductBySlugService
 
-        return { ...stockItem, images }
-      }) ?? []
+      const stock =
+        product.stock?.map((stockItem) => {
+          const images = stockItem.images?.map((img) => ({
+            ...img,
+            url: getImageUrl(img.url),
+          }))
 
-    return {
-      ...product,
-      stock,
-    }
-  })
+          return { ...stockItem, images }
+        }) ?? []
+
+      return {
+        ...product,
+        stock,
+      }
+    })
+  }
+
+  return {
+    products: productsResponse,
+    pagination: res.meta.pagination,
+  }
 }
 
 export async function getProductBySlugService(

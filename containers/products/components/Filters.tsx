@@ -1,98 +1,82 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Checkbox, Field, Label, Radio, RadioGroup } from '@headlessui/react'
+import { useShallow } from 'zustand/shallow'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-// Datos de ejemplo para los filtros
-const categories = [
-  'Auriculares',
-  'Headsets',
-  'Mouses',
-  'Teclados',
-  'Monitores',
-  'Webcams',
-  'Parlantes',
-]
+import useCategoryStore from '@/store/categories'
+import useBrandStore from '@/store/brands'
 
-const brands = [
-  'Genius',
-  'Kingston',
-  'Marvo',
-  'Netmak',
-  'Noga',
-  'Redragon',
-  'Sandisk',
-  'Suono',
-  'X-Trike-Me',
-]
+const Filters = () => {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-interface ActiveFiltersProps {
-  selectedCategory: string
-  selectedBrands: string[]
-  handleCategoryChange: (category: string) => void
-  handleBrandChange: (brand: string) => void
-}
+  const currentBrandParam = searchParams.get('brand') ?? 'all'
+  const currentCategoryParam = searchParams.get('category') ?? 'all'
 
-// Componente para los filtros activos
-const ActiveFilters = ({
-  selectedCategory,
-  selectedBrands,
-  handleCategoryChange,
-  handleBrandChange,
-}: ActiveFiltersProps) => {
-  if (!selectedCategory && selectedBrands.length === 0) {
-    return null
+  const { categories, getCategories } = useCategoryStore(
+    useShallow((state) => ({
+      categories: state.categories,
+      getCategories: state.getCategories,
+    }))
+  )
+
+  const { brands, getBrands } = useBrandStore(
+    useShallow((state) => ({
+      brands: state.brands,
+      getBrands: state.getBrands,
+    }))
+  )
+
+  useEffect(() => {
+    if (categories.length === 0) {
+      getCategories()
+    }
+  }, [categories.length, getCategories])
+
+  useEffect(() => {
+    if (brands.length === 0) {
+      getBrands()
+    }
+  }, [brands.length, getBrands])
+
+  const clearAllFilters = () => {
+    router.push(pathname)
   }
 
-  return (
-    <div className="mb-6 pb-4 border-b border-gray-200">
-      <h4 className="text-sm font-medium text-gray-900 mb-3">
-        Filtros aplicados
-      </h4>
-      <div className="flex flex-wrap gap-2">
-        {selectedCategory && (
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-            {selectedCategory}
-            <button
-              onClick={() => handleCategoryChange('')}
-              className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full text-indigo-400 hover:bg-indigo-200 hover:text-indigo-500"
-            >
-              ×
-            </button>
-          </span>
-        )}
-        {selectedBrands.map((brand) => (
-          <span
-            key={brand}
-            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800"
-          >
-            {brand}
-            <button
-              onClick={() => handleBrandChange(brand)}
-              className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full text-green-400 hover:bg-green-200 hover:text-green-500"
-            >
-              ×
-            </button>
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
+  const selectedCategory =
+    currentCategoryParam === 'all' ? '' : currentCategoryParam
 
-interface FiltersProps {
-  clearAllFilters: () => void
-  handleCategoryChange: (category: string) => void
-  handleBrandChange: (brand: string) => void
-  selectedCategory: string
-  selectedBrands: string[]
-}
+  const selectedBrands =
+    currentBrandParam === 'all'
+      ? []
+      : currentBrandParam.split(',').filter((b) => b.trim() !== '')
 
-const Filters = ({
-  clearAllFilters,
-  handleCategoryChange,
-  handleBrandChange,
-  selectedCategory,
-  selectedBrands,
-}: FiltersProps) => {
+  const handleCategoryChange = (categorySlug: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('category', categorySlug)
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
+  const handleBrandChange = (brandName: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    let updatedBrands = selectedBrands.slice()
+
+    if (updatedBrands.includes(brandName)) {
+      updatedBrands = updatedBrands.filter((b) => b !== brandName)
+    } else {
+      updatedBrands.push(brandName)
+    }
+
+    if (updatedBrands.length > 0) {
+      params.set('brand', updatedBrands.join(','))
+    } else {
+      params.delete('brand')
+    }
+
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
   return (
     <>
       <div className="flex items-center justify-between mb-6">
@@ -105,28 +89,21 @@ const Filters = ({
         </button>
       </div>
 
-      <ActiveFilters
-        selectedCategory={selectedCategory}
-        selectedBrands={selectedBrands}
-        handleCategoryChange={handleCategoryChange}
-        handleBrandChange={handleBrandChange}
-      />
-
       {/* Categorías */}
       <div className="mb-6">
         <h3 className="text-sm font-medium text-gray-900 mb-3">Categorías</h3>
         <RadioGroup value={selectedCategory} onChange={handleCategoryChange}>
           <div className="space-y-2">
             {categories.map((category) => (
-              <Field key={category} className="flex items-center">
+              <Field key={category.id} className="flex items-center">
                 <Radio
-                  value={category}
+                  value={category.slug}
                   className="group flex size-4 items-center justify-center rounded-full border border-gray-300 bg-white data-[checked]:border-indigo-600"
                 >
                   <span className="invisible size-2 rounded-full bg-indigo-600 group-data-[checked]:visible" />
                 </Radio>
                 <Label className="ml-2 text-sm text-gray-700 cursor-pointer">
-                  {category}
+                  {category.name}
                 </Label>
               </Field>
             ))}
@@ -139,10 +116,10 @@ const Filters = ({
         <h3 className="text-sm font-medium text-gray-900 mb-3">Marcas</h3>
         <div className="space-y-2">
           {brands.map((brand) => (
-            <Field key={brand} className="flex items-center">
+            <Field key={brand.id} className="flex items-center">
               <Checkbox
-                checked={selectedBrands.includes(brand)}
-                onChange={() => handleBrandChange(brand)}
+                checked={selectedBrands.includes(brand.slug)}
+                onChange={() => handleBrandChange(brand.slug)}
                 className="group block size-4 rounded border border-gray-300 bg-white data-[checked]:bg-indigo-600 data-[checked]:border-indigo-600"
               >
                 <svg
@@ -159,7 +136,7 @@ const Filters = ({
                 </svg>
               </Checkbox>
               <Label className="ml-2 text-sm text-gray-700 cursor-pointer">
-                {brand}
+                {brand.name}
               </Label>
             </Field>
           ))}

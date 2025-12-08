@@ -1,25 +1,33 @@
 import React from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { ArrowDown01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 
-interface SortButtonProps {
-  sortBy: string
-  setSortBy: (value: string) => void
-}
-
 const sortOptions = [
-  { value: 'newest', label: 'Más recientes' },
-  { value: 'price-low', label: 'Precio: menor a mayor' },
-  { value: 'price-high', label: 'Precio: mayor a menor' },
+  { value: 'recent', label: 'Más recientes' },
+  { value: 'price_asc', label: 'Menor precio' },
+  { value: 'price_desc', label: 'Mayor precio' },
 ]
 
-const SortButton = ({ sortBy, setSortBy }: SortButtonProps) => {
+const SortButton = () => {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const currentSort = searchParams.get('sort') || 'recent'
+
+  const handleStockChange = (sortValue: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('sort', sortValue)
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
   return (
     <Menu as="div" className="relative">
       <MenuButton className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
         <span className="block truncate">
-          {sortOptions.find((option) => option.value === sortBy)?.label}
+          {sortOptions.find((option) => option.value === currentSort)?.label}
         </span>
         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
           <HugeiconsIcon
@@ -34,7 +42,7 @@ const SortButton = ({ sortBy, setSortBy }: SortButtonProps) => {
           {sortOptions.map((option) => (
             <MenuItem key={option.value}>
               <button
-                onClick={() => setSortBy(option.value)}
+                onClick={() => handleStockChange(option.value)}
                 className="group flex w-full items-center px-4 py-2 text-sm text-gray-700 data-[focus]:bg-indigo-100 data-[focus]:text-indigo-900"
               >
                 {option.label}

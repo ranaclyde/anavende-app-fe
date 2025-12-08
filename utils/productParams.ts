@@ -51,7 +51,12 @@ export function buildProductsSearchQuery(params: ProductSearchParams): string {
 
   // --- Filtro por marca ---
   if (params.brand) {
-    searchParams.append('filters[brand][slug][$eq]', params.brand)
+    const brandList = Array.isArray(params.brand)
+      ? params.brand
+      : [params.brand]
+
+    // $in recibe una lista separada por comas
+    searchParams.append('filters[brand][slug][$in]', brandList.join(','))
   }
 
   // --- Buscador por texto ---
