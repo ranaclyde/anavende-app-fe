@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { useRouter } from 'next/navigation'
 import {
   Dialog,
   DialogBackdrop,
@@ -25,6 +26,7 @@ interface CartDrawerProps {
 }
 
 const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
+  const router = useRouter()
   const { shoppingCart, incrementQuantity, decrementQuantity, removeItem } =
     useShoppingCartStore(
       useShallow((state) => ({
@@ -34,6 +36,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
         removeItem: state.removeItem,
       }))
     )
+
+  const goToShoppingCart = () => {
+    onClose()
+    router.push('/carrito')
+  }
 
   return (
     <Dialog open={visible} onClose={onClose} className="relative z-50">
@@ -154,10 +161,11 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                   </div>
                   <ButtonUi
                     color="merlot"
+                    onClick={goToShoppingCart}
                     className="w-full"
                     disabled={shoppingCart.items.length === 0}
                   >
-                    Proceder al Pago
+                    Continuar con la compra
                   </ButtonUi>
                 </div>
               </div>

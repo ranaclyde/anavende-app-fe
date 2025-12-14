@@ -11,6 +11,6 @@ export interface ShoppingCartItem {
   price: number
   imagenUrl: string
   name: string
-  color: Color
+  colors: Color[]
   maxStock: number
 }

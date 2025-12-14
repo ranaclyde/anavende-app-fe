@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   Cancel01Icon,
@@ -30,11 +31,14 @@ const navigation = [
 
 const Navbar = () => {
   const [cartOpen, setCartOpen] = useState(false)
+  const pathname = usePathname()
   const { shoppingCart } = useShoppingCartStore(
     useShallow((state) => ({
       shoppingCart: state.shoppingCart,
     }))
   )
+
+  console.log('Current pathname:', pathname)
 
   return (
     <Disclosure
@@ -78,24 +82,27 @@ const Navbar = () => {
                 strokeWidth={2}
               />
             </button>
-            <button
-              type="button"
-              className="relative hidden md:block text-gray-600 hover:text-gray-900 p-2 cursor-pointer"
-              onClick={() => setCartOpen(!cartOpen)}
-            >
-              <HugeiconsIcon
-                icon={ShoppingCart02Icon}
-                size={24}
-                color="currentColor"
-                strokeWidth={2}
-              />
-              <span className="absolute -top-0 -right-1 bg-red-500 text-white rounded-full text-xs flex items-center justify-center h-5 w-5">
-                {shoppingCart.items.reduce(
-                  (total, item) => total + item.quantity,
-                  0
-                )}
-              </span>
-            </button>
+            {pathname !== '/carrito' && (
+              <button
+                type="button"
+                className="relative hidden md:block text-gray-600 hover:text-gray-900 p-2 cursor-pointer"
+                onClick={() => setCartOpen(!cartOpen)}
+              >
+                <HugeiconsIcon
+                  icon={ShoppingCart02Icon}
+                  size={24}
+                  color="currentColor"
+                  strokeWidth={2}
+                />
+                <span className="absolute -top-0 -right-1 bg-red-500 text-white rounded-full text-xs flex items-center justify-center h-5 w-5">
+                  {shoppingCart.items.reduce(
+                    (total, item) => total + item.quantity,
+                    0
+                  )}
+                </span>
+              </button>
+            )}
+
             {/* Mobile menu button*/}
             <DisclosureButton className="group md:hidden rounded-md p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
               <HugeiconsIcon

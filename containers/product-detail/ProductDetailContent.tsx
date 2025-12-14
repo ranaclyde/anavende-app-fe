@@ -88,7 +88,7 @@ export default function ProductDetailContent({ product }: Props) {
       price: finalPrice,
       imagenUrl: imageUrl,
       name: product.name,
-      color: selectedStock.colors[0],
+      colors: selectedStock.colors,
       maxStock: availableQuantity,
     })
 
