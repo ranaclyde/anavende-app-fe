@@ -90,6 +90,7 @@ export default function ProductDetailContent({ product }: Props) {
       name: product.name,
       colors: selectedStock.colors,
       maxStock: availableQuantity,
+      slug: product.slug,
     })
 
     // Resetear cantidad después de agregar

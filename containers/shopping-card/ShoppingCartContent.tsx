@@ -17,6 +17,7 @@ import ShippingCalculator from './components/ShippingCalculator'
 import type { ShippingInfo } from '@/store/shipping'
 
 import useShoppingCartStore from '@/store/shoppingCart'
+import useSettingsStore from '@/store/settings'
 
 const ShoppingCartContent = () => {
   const [buyerName, setBuyerName] = useState('')
@@ -36,6 +37,7 @@ const ShoppingCartContent = () => {
         removeItem: state.removeItem,
       }))
     )
+  const phoneNumber = useSettingsStore((state) => state.settings?.phone)
 
   const shippingCost =
     shippingMethod === 'delivery' && currentShipping ? currentShipping.cost : 0
@@ -52,48 +54,66 @@ const ShoppingCartContent = () => {
   const generateWhatsAppLink = () => {
     if (!buyerName.trim() || shoppingCart.items.length === 0) return '#'
 
-    const phoneNumber = '5491134567890' // Reemplazar con el número real
+    const baseUrl = process.env.NEXT_PUBLIC_URL
     let message = `¡Hola! Soy *${buyerName}* y quiero realizar una compra:\n\n`
 
-    shoppingCart.items.forEach((item, index) => {
-      message += `${index + 1}. *${item.name}*\n`
-      message += `   - Cantidad: ${item.quantity}\n`
-      message += `   - Precio unitario: $${item.price.toFixed(2)}\n`
-      message += `   - Subtotal: $${(item.price * item.quantity).toFixed(
-        2
-      )}\n\n`
+    message += '*PRODUCTOS:*\n'
+    shoppingCart.items.forEach((item) => {
+      message += `${item.quantity} x ${item.name.toUpperCase()}\n`
+      message += `Precio: $${item.price.toLocaleString('es-AR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}\n`
+      message += `URL: ${baseUrl}/productos/${item.slug}\n\n`
     })
 
-    message += `*Subtotal productos: $${shoppingCart.totalPrice.toFixed(2)}*\n`
+    message += `━━━━━━━━━━━━━━━━\n`
+    message += `*Subtotal:* $${shoppingCart.totalPrice.toLocaleString('es-AR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}\n`
 
     if (shippingMethod === 'delivery' && currentShipping) {
       message += `*Dirección de envío:* ${currentShipping.address}\n`
       if (currentShipping.cost > 0) {
-        message += `*Costo de envío:* $${currentShipping.cost.toFixed(2)} (${
+        message += `*Envío (${
           currentShipping.zone
-        }${
-          currentShipping.distance ? ` - ${currentShipping.distance} km` : ''
-        })\n`
-        message += `*Total con envío: $${totalWithShipping.toFixed(2)}*\n\n`
+        }):* $${currentShipping.cost.toLocaleString('es-AR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}\n`
+        message += `*TOTAL:* $${totalWithShipping.toLocaleString('es-AR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}\n`
       } else {
-        message += `*Costo de envío:* A coordinar\n\n`
+        message += `*Envío:* A coordinar\n`
+        message += `*TOTAL:* $${shoppingCart.totalPrice.toLocaleString(
+          'es-AR',
+          { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+        )} + envío\n`
       }
     } else {
-      message += `*Total: $${shoppingCart.totalPrice.toFixed(2)}*\n`
-      message += `*Retiro en local*\n\n`
+      message += `*Método de entrega:* Retiro en local\n`
+      message += `*TOTAL:* $${shoppingCart.totalPrice.toLocaleString('es-AR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}\n`
     }
 
-    message += `Acepto los términos y condiciones.`
+    message += `━━━━━━━━━━━━━━━━\n\n`
+    message += `_Acepto los términos y condiciones_`
 
-    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+    // Usar API de WhatsApp para detectar automáticamente app/web/móvil
+    return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
+      message
+    )}`
   }
 
   const isCheckoutDisabled =
     !buyerName.trim() ||
     shoppingCart.items.length === 0 ||
     (shippingMethod === 'delivery' && !currentShipping)
-
-  console.log('shippingMethod:', shippingMethod)
 
   return (
     <main>

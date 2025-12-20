@@ -13,4 +13,5 @@ export interface ShoppingCartItem {
   name: string
   colors: Color[]
   maxStock: number
+  slug: string
 }
