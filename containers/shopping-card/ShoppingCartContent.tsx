@@ -13,12 +13,19 @@ import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import ButtonUi from '@/components/ui/ButtonUi'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
+import ShippingCalculator from './components/ShippingCalculator'
+import type { ShippingInfo } from '@/store/shipping'
 
 import useShoppingCartStore from '@/store/shoppingCart'
 
 const ShoppingCartContent = () => {
   const [buyerName, setBuyerName] = useState('')
-  const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [shippingMethod, setShippingMethod] = useState<'pickup' | 'delivery'>(
+    'pickup'
+  )
+  const [currentShipping, setCurrentShipping] = useState<ShippingInfo | null>(
+    null
+  )
 
   const { shoppingCart, incrementQuantity, decrementQuantity, removeItem } =
     useShoppingCartStore(
@@ -30,9 +37,20 @@ const ShoppingCartContent = () => {
       }))
     )
 
+  const shippingCost =
+    shippingMethod === 'delivery' && currentShipping ? currentShipping.cost : 0
+  const totalWithShipping = shoppingCart.totalPrice + shippingCost
+
+  const handleShippingChange = (
+    method: 'pickup' | 'delivery',
+    shippingInfo: ShippingInfo | null
+  ) => {
+    setShippingMethod(method)
+    setCurrentShipping(shippingInfo)
+  }
+
   const generateWhatsAppLink = () => {
-    if (!buyerName.trim() || !acceptedTerms || shoppingCart.items.length === 0)
-      return '#'
+    if (!buyerName.trim() || shoppingCart.items.length === 0) return '#'
 
     const phoneNumber = '5491134567890' // Reemplazar con el número real
     let message = `¡Hola! Soy *${buyerName}* y quiero realizar una compra:\n\n`
@@ -46,14 +64,36 @@ const ShoppingCartContent = () => {
       )}\n\n`
     })
 
-    message += `*Total: $${shoppingCart.totalPrice.toFixed(2)}*\n\n`
+    message += `*Subtotal productos: $${shoppingCart.totalPrice.toFixed(2)}*\n`
+
+    if (shippingMethod === 'delivery' && currentShipping) {
+      message += `*Dirección de envío:* ${currentShipping.address}\n`
+      if (currentShipping.cost > 0) {
+        message += `*Costo de envío:* $${currentShipping.cost.toFixed(2)} (${
+          currentShipping.zone
+        }${
+          currentShipping.distance ? ` - ${currentShipping.distance} km` : ''
+        })\n`
+        message += `*Total con envío: $${totalWithShipping.toFixed(2)}*\n\n`
+      } else {
+        message += `*Costo de envío:* A coordinar\n\n`
+      }
+    } else {
+      message += `*Total: $${shoppingCart.totalPrice.toFixed(2)}*\n`
+      message += `*Retiro en local*\n\n`
+    }
+
     message += `Acepto los términos y condiciones.`
 
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
   }
 
   const isCheckoutDisabled =
-    !buyerName.trim() || !acceptedTerms || shoppingCart.items.length === 0
+    !buyerName.trim() ||
+    shoppingCart.items.length === 0 ||
+    (shippingMethod === 'delivery' && !currentShipping)
+
+  console.log('shippingMethod:', shippingMethod)
 
   return (
     <main>
@@ -157,14 +197,39 @@ const ShoppingCartContent = () => {
                   Resumen de Compra
                 </h2>
 
+                {/* Componente de envío */}
+                <ShippingCalculator onShippingChange={handleShippingChange} />
+
+                {/* Resumen de precios */}
                 <div className="border-t border-gray-200 pt-4 mb-4">
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>Subtotal:</span>
+                    <span>Subtotal productos:</span>
                     <span>${shoppingCart.totalPrice.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-lg font-bold text-gray-900 mt-4 pt-4 border-t border-gray-200">
+                  {shippingMethod === 'delivery' && (
+                    <div className="flex justify-between text-sm text-gray-600 mb-2">
+                      <span>
+                        Envío
+                        {currentShipping?.zone
+                          ? ` (${currentShipping.zone})`
+                          : ''}
+                        :
+                      </span>
+                      <span>
+                        {currentShipping?.cost && currentShipping.cost > 0
+                          ? `$${currentShipping.cost.toFixed(2)}`
+                          : 'A coordinar'}
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-lg font-bold text-gray-900 mt-3 pt-3 border-t border-gray-200">
                     <span>Total:</span>
-                    <span>${shoppingCart.totalPrice.toFixed(2)}</span>
+                    <span>
+                      {shippingMethod === 'delivery' &&
+                      currentShipping?.cost === 0
+                        ? `$${shoppingCart.totalPrice.toFixed(2)} + envío`
+                        : `$${totalWithShipping.toFixed(2)}`}
+                    </span>
                   </div>
                 </div>
 
@@ -182,31 +247,9 @@ const ShoppingCartContent = () => {
                     value={buyerName}
                     onChange={(e) => setBuyerName(e.target.value)}
                     placeholder="Ingresa tu nombre"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#722f37] focus:border-transparent outline-none transition-all"
                     required
                   />
-                </div>
-
-                {/* Términos y condiciones */}
-                <div className="mb-6">
-                  <label className="flex items-start gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={acceptedTerms}
-                      onChange={(e) => setAcceptedTerms(e.target.checked)}
-                      className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    />
-                    <span className="text-sm text-gray-600">
-                      Acepto los{' '}
-                      <Link
-                        href="/terminos-y-condiciones"
-                        target="_blank"
-                        className="text-blue-600 hover:text-blue-800 underline font-medium"
-                      >
-                        términos y condiciones
-                      </Link>
-                    </span>
-                  </label>
                 </div>
 
                 {/* Botón de WhatsApp */}
@@ -222,8 +265,20 @@ const ShoppingCartContent = () => {
                 >
                   Finalizar compra por WhatsApp
                 </ButtonUi>
-                <p className="text-xs text-gray-500 text-center mt-2">
+                <p className="text-xs text-gray-500 text-center mt-3">
                   Serás redirigido a WhatsApp para completar tu pedido
+                </p>
+
+                {/* Términos y condiciones */}
+                <p className="text-xs text-gray-500 text-center mt-3">
+                  Al realizar la compra, aceptas nuestros{' '}
+                  <Link
+                    href="/terminos-y-condiciones"
+                    target="_blank"
+                    className="text-[#722f37] hover:text-[#8b3a44] underline font-medium"
+                  >
+                    términos y condiciones
+                  </Link>
                 </p>
               </div>
             </div>
