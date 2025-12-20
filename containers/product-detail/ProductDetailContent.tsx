@@ -5,6 +5,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import {
   FavouriteIcon,
   ShoppingCartAdd02Icon,
+  ShoppingCartFavorite02Icon,
   Share08Icon,
   ArrowLeft01Icon,
 } from '@hugeicons/core-free-icons'
@@ -24,12 +25,14 @@ import UnitySelect from './components/UnitySelect'
 
 import { type SimpleProduct } from '@/interfaces/products'
 import useShoppingCartStore from '@/store/shoppingCart'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   product: SimpleProduct
 }
 
 export default function ProductDetailContent({ product }: Props) {
+  const router = useRouter()
   const [selectedStockIndex, setSelectedStockIndex] = useState(0)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
@@ -76,6 +79,10 @@ export default function ProductDetailContent({ product }: Props) {
 
   const handleAddToCart = () => {
     if (!inStock) return
+    if (isInCart) {
+      setCartOpen(true)
+      return
+    }
 
     const imageUrl =
       currentImages.length > 0
@@ -95,6 +102,11 @@ export default function ProductDetailContent({ product }: Props) {
 
     // Resetear cantidad después de agregar
     setQuantity(1)
+  }
+
+  const handleBuyNow = () => {
+    handleAddToCart()
+    router.push('/carrito')
   }
 
   return (
@@ -230,8 +242,8 @@ export default function ProductDetailContent({ product }: Props) {
                 <ButtonUi
                   color="merlot"
                   className="flex items-center justify-center gap-2 w-60"
-                  disabled={!inStock}
-                  onClick={handleAddToCart}
+                  disabled={!inStock || isInCart}
+                  onClick={handleBuyNow}
                 >
                   Comprar ahora
                 </ButtonUi>
@@ -243,19 +255,16 @@ export default function ProductDetailContent({ product }: Props) {
                     disabled={!inStock}
                     onClick={handleAddToCart}
                   >
-                    <HugeiconsIcon icon={ShoppingCartAdd02Icon} size={20} />
-                    Agregar al carrito
+                    <HugeiconsIcon
+                      icon={
+                        isInCart
+                          ? ShoppingCartFavorite02Icon
+                          : ShoppingCartAdd02Icon
+                      }
+                      size={20}
+                    />
+                    {isInCart ? 'Ver carrito' : 'Agregar al carrito'}
                   </ButtonUi>
-                  {isInCart && (
-                    <ButtonUi
-                      color="info"
-                      variant="link"
-                      className="flex items-center justify-center gap-2"
-                      onClick={() => setCartOpen(true)}
-                    >
-                      Ver carrito
-                    </ButtonUi>
-                  )}
                 </div>
               </div>
             </div>
