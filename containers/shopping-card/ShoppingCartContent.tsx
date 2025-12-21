@@ -1,13 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import React, { useState } from 'react'
-import { useShallow } from 'zustand/shallow'
-import { HugeiconsIcon } from '@hugeicons/react'
-import {
-  Delete02Icon,
-  MinusSignCircleIcon,
-  PlusSignCircleIcon,
-} from '@hugeicons/core-free-icons'
 import Link from 'next/link'
 
 import Container from '@/components/ui/Container'
@@ -18,6 +11,7 @@ import type { ShippingInfo } from '@/store/shipping'
 
 import useShoppingCartStore from '@/store/shoppingCart'
 import useSettingsStore from '@/store/settings'
+import ShoppingTable from './components/ShoppingTable'
 
 const ShoppingCartContent = () => {
   const [buyerName, setBuyerName] = useState('')
@@ -28,15 +22,7 @@ const ShoppingCartContent = () => {
     null
   )
 
-  const { shoppingCart, incrementQuantity, decrementQuantity, removeItem } =
-    useShoppingCartStore(
-      useShallow((state) => ({
-        shoppingCart: state.shoppingCart,
-        incrementQuantity: state.incrementQuantity,
-        decrementQuantity: state.decrementQuantity,
-        removeItem: state.removeItem,
-      }))
-    )
+  const shoppingCart = useShoppingCartStore((state) => state.shoppingCart)
   const phoneNumber = useSettingsStore((state) => state.settings?.phone)
 
   const shippingCost =
@@ -137,77 +123,8 @@ const ShoppingCartContent = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Lista de productos */}
-            <div className="lg:col-span-2 space-y-4">
-              {shoppingCart.items.map((item) => (
-                <div
-                  key={item.productId}
-                  className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg"
-                >
-                  <button
-                    className="text-red-500 hover:text-red-700 transition-colors self-center"
-                    onClick={() => removeItem(item.productId)}
-                    aria-label="Eliminar producto"
-                  >
-                    <HugeiconsIcon
-                      icon={Delete02Icon}
-                      size={20}
-                      strokeWidth={2}
-                    />
-                  </button>
-                  <img
-                    src={item.imagenUrl}
-                    alt={item.name}
-                    className="w-20 h-20 md:w-24 md:h-24 object-cover rounded"
-                  />
-                  <div className="flex-1">
-                    <h3 className="text-base md:text-lg font-semibold text-gray-900">
-                      {item.name}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Color: {item.colors.map((color) => color.name).join('/')}
-                    </p>
-                    <div className="flex items-center gap-4 mt-2">
-                      <div className="flex items-center gap-2">
-                        <button
-                          className="text-gray-500 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                          onClick={() => decrementQuantity(item.productId)}
-                          disabled={item.quantity <= 1}
-                          aria-label="Disminuir cantidad"
-                        >
-                          <HugeiconsIcon
-                            icon={MinusSignCircleIcon}
-                            size={20}
-                            strokeWidth={2}
-                          />
-                        </button>
-                        <span className="text-sm font-medium w-8 text-center">
-                          {item.quantity}
-                        </span>
-                        <button
-                          className="text-gray-500 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                          onClick={() => incrementQuantity(item.productId)}
-                          disabled={item.quantity >= item.maxStock}
-                          aria-label="Aumentar cantidad"
-                        >
-                          <HugeiconsIcon
-                            icon={PlusSignCircleIcon}
-                            size={20}
-                            strokeWidth={2}
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm text-gray-600">
-                      ${item.price.toFixed(2)} c/u
-                    </p>
-                    <p className="text-lg font-bold text-gray-900 mt-1">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="lg:col-span-2">
+              <ShoppingTable />
             </div>
 
             {/* Resumen y checkout */}
