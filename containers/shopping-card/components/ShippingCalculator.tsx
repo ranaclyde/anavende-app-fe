@@ -1,7 +1,14 @@
 'use client'
 import React, { useState } from 'react'
+import clsx from 'clsx'
+
+// Components
 import ButtonUi from '@/components/ui/ButtonUi'
+
+// Utils
 import { calculateShippingFromAddress } from '@/utils/shippingCalculator'
+
+// Types
 import type { ShippingInfo } from '@/store/shipping'
 
 interface ShippingCalculatorProps {
@@ -114,8 +121,18 @@ const ShippingCalculator: React.FC<ShippingCalculatorProps> = ({
         <div className="mb-4 pb-4">
           {currentShipping ? (
             // Panel de resultado cuando ya se calculó el envío
-            <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-              <p className="text-xs text-green-800 mb-1">
+            <div
+              className={clsx(
+                'p-3 bg-green-50 border border-green-200 rounded-md',
+                shippingError && 'bg-orange-50 border-orange-200'
+              )}
+            >
+              <p
+                className={clsx(
+                  'text-xs text-green-800 mb-1',
+                  shippingError && 'text-orange-800'
+                )}
+              >
                 <strong>Dirección:</strong> {currentShipping.address}
               </p>
               {currentShipping.distance > 0 && (
@@ -130,10 +147,15 @@ const ShippingCalculator: React.FC<ShippingCalculatorProps> = ({
                   </p>
                 </>
               )}
-              {currentShipping.cost === 0 && (
-                <p className="text-xs text-green-800 mb-1">
-                  El costo se coordinará por WhatsApp
-                </p>
+              {shippingError && (
+                <>
+                  <p className="text-xs text-orange-800 mb-1">
+                    {shippingError}
+                  </p>
+                  <p className="text-xs text-orange-700 italic mt-2">
+                    * El costo se coordinará por WhatsApp
+                  </p>
+                </>
               )}
               <ButtonUi
                 onClick={() => {
@@ -167,7 +189,7 @@ const ShippingCalculator: React.FC<ShippingCalculatorProps> = ({
                     setShippingAddress(e.target.value)
                     setShippingError('')
                   }}
-                  placeholder="Ej: Mitre 99, Carmen de Patagones"
+                  placeholder="Ej: Rivadavia 193, Patagones"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#722f37] focus:border-transparent outline-none transition-all text-sm"
                 />
                 <p className="text-xs text-gray-500">
@@ -184,12 +206,6 @@ const ShippingCalculator: React.FC<ShippingCalculatorProps> = ({
                   {isCalculating ? 'Calculando...' : 'Calcular envío'}
                 </ButtonUi>
               </div>
-
-              {shippingError && (
-                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-                  <p className="text-xs text-yellow-800">{shippingError}</p>
-                </div>
-              )}
             </>
           )}
         </div>

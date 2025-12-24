@@ -1,18 +1,5 @@
-// Coordenadas de tu local en Viedma, Río Negro
-const STORE_LOCATION = {
-  lat: -40.8135,
-  lng: -62.9967,
-  address: 'Florentino Ameghino 772 Viedma, Río Negro',
-}
-
-// Tarifas de envío por rango de distancia (en km)
-export const SHIPPING_RATES = [
-  { maxKm: 0.5, price: 3000, label: 'Zona 1' },
-  { maxKm: 1, price: 4500, label: 'Zona 2' },
-  { maxKm: 3, price: 6000, label: 'Zona 3' },
-  { maxKm: 5, price: 8000, label: 'Zona 4' },
-  { maxKm: Infinity, price: 0, label: 'Fuera de zona de cobertura' },
-]
+import { type ShippingRate } from '@/interfaces/settings'
+import useSettingsStore from '@/store/settings'
 
 interface Coordinates {
   lat: number
@@ -52,9 +39,7 @@ function toRad(degrees: number): number {
  * Geocodifica una dirección usando Nominatim (OpenStreetMap)
  * Retorna las coordenadas o null si no se encuentra
  */
-export async function geocodeAddress(
-  address: string
-): Promise<Coordinates | null> {
+async function geocodeAddress(address: string): Promise<Coordinates | null> {
   try {
     // Si el usuario ya especificó la ciudad, usar su dirección tal cual
     // Si no, agregar "Río Negro, Argentina" para acotar la búsqueda a la región
@@ -105,16 +90,22 @@ export async function geocodeAddress(
 /**
  * Calcula el costo de envío basado en la distancia
  */
-export function calculateShippingCost(distanceKm: number): number {
-  const rate = SHIPPING_RATES.find((r) => distanceKm <= r.maxKm)
+function calculateShippingCost(
+  distanceKm: number,
+  shippingRates: ShippingRate[]
+): number {
+  const rate = shippingRates.find((r) => distanceKm <= r.maxKm)
   return rate?.price || 0
 }
 
 /**
  * Obtiene el label de la zona según la distancia
  */
-export function getShippingZoneLabel(distanceKm: number): string {
-  const rate = SHIPPING_RATES.find((r) => distanceKm <= r.maxKm)
+function getShippingZoneLabel(
+  distanceKm: number,
+  shippingRates: ShippingRate[]
+): string {
+  const rate = shippingRates.find((r) => distanceKm <= r.maxKm)
   return rate?.label || 'Fuera de zona'
 }
 
@@ -128,6 +119,14 @@ export async function calculateShippingFromAddress(address: string): Promise<{
   zoneLabel?: string
   error?: string
 }> {
+  const settings = useSettingsStore.getState().settings
+  if (!settings) {
+    return {
+      success: false,
+      error: 'Configuración de la tienda no disponible.',
+    }
+  }
+
   if (!address.trim()) {
     return { success: false, error: 'Debes ingresar una dirección' }
   }
@@ -142,9 +141,21 @@ export async function calculateShippingFromAddress(address: string): Promise<{
     }
   }
 
+  const STORE_LOCATION = {
+    lat: settings.latitude,
+    lng: settings.longitude,
+    address: settings.address,
+  }
+
+  // Tarifas de envío por rango de distancia (en km)
+  const SHIPPING_RATES = [
+    ...(settings?.shippingRates || []),
+    { id: 999, maxKm: Infinity, price: 0, label: 'Fuera de zona de cobertura' },
+  ]
+
   const distance = calculateDistance(STORE_LOCATION, coords)
-  const shippingCost = calculateShippingCost(distance)
-  const zoneLabel = getShippingZoneLabel(distance)
+  const shippingCost = calculateShippingCost(distance, SHIPPING_RATES)
+  const zoneLabel = getShippingZoneLabel(distance, SHIPPING_RATES)
 
   if (shippingCost === 0) {
     return {
@@ -160,5 +171,3 @@ export async function calculateShippingFromAddress(address: string): Promise<{
     zoneLabel,
   }
 }
-
-export { STORE_LOCATION }

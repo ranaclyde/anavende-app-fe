@@ -17,7 +17,7 @@ import Container from '@/components/ui/Container'
 import useSettingsStore from '@/store/settings'
 
 const ContactContent = () => {
-  const { settings } = useSettingsStore()
+  const settings = useSettingsStore((state) => state.settings)
 
   if (!settings) return null
 
@@ -46,7 +46,7 @@ const ContactContent = () => {
                   <h3 className="font-semibold text-gray-900 mb-1">
                     Dirección
                   </h3>
-                  <p className="text-gray-600">{settings.address}</p>
+                  <p className="text-gray-600">Viedma, Río Negro</p>
                 </div>
               </div>
 
