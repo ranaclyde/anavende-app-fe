@@ -7,6 +7,7 @@ import {
   MinusSignIcon,
   PlusSignIcon,
 } from '@hugeicons/core-free-icons'
+import { butterup } from 'butterup-toast'
 
 import useShoppingCartStore from '@/store/shoppingCart'
 
@@ -20,6 +21,17 @@ const ShoppingTable = () => {
         removeItem: state.removeItem,
       }))
     )
+
+  const handleRemoveItem = (productId: number) => {
+    removeItem(productId)
+    butterup.toast({
+      title: 'Éxito!',
+      message: 'Producto eliminado del carrito.',
+      location: 'top-right',
+      type: 'success',
+      icon: true,
+    })
+  }
 
   return (
     <div className="bg-gray-50 rounded-lg overflow-hidden">
@@ -114,7 +126,7 @@ const ShoppingTable = () => {
             <div className="col-span-1 flex justify-end">
               <button
                 className="flex items-center gap-1 text-sm text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
-                onClick={() => removeItem(item.productId)}
+                onClick={() => handleRemoveItem(item.productId)}
                 aria-label="Eliminar producto"
               >
                 <HugeiconsIcon icon={Delete02Icon} size={18} strokeWidth={2} />

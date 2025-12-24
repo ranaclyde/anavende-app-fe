@@ -15,6 +15,7 @@ import {
   PlusSignCircleIcon,
 } from '@hugeicons/core-free-icons'
 import { useShallow } from 'zustand/shallow'
+import { butterup } from 'butterup-toast'
 
 import ButtonUi from './ui/ButtonUi'
 
@@ -40,6 +41,17 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
   const goToShoppingCart = () => {
     onClose()
     router.push('/carrito')
+  }
+
+  const handleRemoveItem = (productId: number) => {
+    removeItem(productId)
+    butterup.toast({
+      title: 'Éxito!',
+      message: 'Producto eliminado del carrito.',
+      location: 'top-right',
+      type: 'success',
+      icon: true,
+    })
   }
 
   return (
@@ -137,7 +149,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ visible, onClose }) => {
                             </button>
                             <button
                               className="ml-auto text-red-500 hover:text-red-700"
-                              onClick={() => removeItem(item.productId)}
+                              onClick={() => handleRemoveItem(item.productId)}
                             >
                               <HugeiconsIcon
                                 icon={Delete02Icon}

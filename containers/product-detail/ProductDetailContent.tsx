@@ -3,15 +3,15 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
-  FavouriteIcon,
   ShoppingCartAdd02Icon,
   ShoppingCartFavorite02Icon,
-  Share08Icon,
   ArrowLeft01Icon,
 } from '@hugeicons/core-free-icons'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer'
 import { useShallow } from 'zustand/shallow'
 import { clsx } from 'clsx'
+import { butterup } from 'butterup-toast'
+import { useRouter } from 'next/navigation'
 
 import Container from '@/components/ui/Container'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
@@ -25,7 +25,6 @@ import UnitySelect from './components/UnitySelect'
 
 import { type SimpleProduct } from '@/interfaces/products'
 import useShoppingCartStore from '@/store/shoppingCart'
-import { useRouter } from 'next/navigation'
 
 interface Props {
   product: SimpleProduct
@@ -98,6 +97,14 @@ export default function ProductDetailContent({ product }: Props) {
       colors: selectedStock.colors,
       maxStock: availableQuantity,
       slug: product.slug,
+    })
+
+    butterup.toast({
+      title: 'Éxito!',
+      message: 'Producto agregado al carrito.',
+      location: 'top-right',
+      type: 'success',
+      icon: true,
     })
 
     // Resetear cantidad después de agregar

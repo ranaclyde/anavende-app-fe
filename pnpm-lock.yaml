@@ -18,8 +18,11 @@ importers:
         specifier: 1.0.5
         version: 1.0.5(react@19.1.0)
       '@strapi/blocks-react-renderer':
-        specifier: ^1.0.2
+        specifier: 1.0.2
         version: 1.0.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      butterup-toast:
+        specifier: ^0.0.1
+        version: 0.0.1
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -812,6 +815,9 @@ packages:
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
     engines: {node: '>=10.16.0'}
+
+  butterup-toast@0.0.1:
+    resolution: {integrity: sha512-EkOaq8fPuLgpBq0ZOzeHwoA2WYy82IuARwaOnfpV2TV8QGal3XioGRDIitFJhIP1274ajHzlgUe1mBC4vt6Cfg==}
 
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
@@ -2663,6 +2669,8 @@ snapshots:
   busboy@1.6.0:
     dependencies:
       streamsearch: 1.1.0
+
+  butterup-toast@0.0.1: {}
 
   call-bind-apply-helpers@1.0.2:
     dependencies:

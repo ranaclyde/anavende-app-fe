@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "butterup-toast/dist/butterup.css";
 
 @theme {
   --color-merlot: #832833;
