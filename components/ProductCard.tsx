@@ -117,7 +117,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
             <span className="text-xl font-semibold text-black-900">
               ${finalPrice.toFixed(2)}
             </span>
-            {discounted && (
+            {discounted !== 0 && (
               <span className="ml-2 text-sm text-slate-500 line-through">
                 ${price.toFixed(2)}
               </span>

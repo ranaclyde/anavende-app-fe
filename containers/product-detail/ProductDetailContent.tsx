@@ -149,7 +149,7 @@ export default function ProductDetailContent({ product }: Props) {
           <div className="space-y-4">
             <div>
               {/* Categoría, marca y botones de acción superior */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="bg-hippie-blue text-white text-xs px-2.5 py-0.5 rounded-sm">
                     {product.categories[0]?.name || 'Sin Categoría'}
@@ -158,14 +158,14 @@ export default function ProductDetailContent({ product }: Props) {
                     por {product.brand.name}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                {/*<div className="flex items-center gap-2">
                   <button className="flex items-center justify-center p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                     <HugeiconsIcon icon={FavouriteIcon} size={20} />
                   </button>
                   <button className="flex items-center justify-center p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                     <HugeiconsIcon icon={Share08Icon} size={20} />
                   </button>
-                </div>
+                </div>*/}
               </div>
 
               {/* Título */}
