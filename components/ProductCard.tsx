@@ -10,8 +10,7 @@ interface Props {
 }
 
 const ProductCard: React.FC<Props> = ({ product }) => {
-  const firstImage =
-    product.stock?.[0]?.images?.[0]?.url ?? '/images/categories/headset.jpg'
+  const firstImage = product.stock?.[0]?.images?.[0]?.url
 
   const categoryName = product.categories?.[0]?.name ?? 'Sin categoría'
 

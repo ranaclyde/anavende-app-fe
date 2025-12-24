@@ -137,7 +137,7 @@ const ShoppingTable = () => {
             }
           }}
         >
-          Clear Cart
+          Vaciar carrito
         </button>
       </div>
     </div>
