@@ -33,6 +33,7 @@ export interface ProductImage {
 }
 
 export type ProductSearchParams = {
+  isFeatured?: boolean // productos destacados
   category?: string // slug de categoría
   brand?: string // slug de marca
   search?: string // texto libre (name o description)

@@ -44,6 +44,14 @@ export function buildProductsQuery(): string {
 export function buildProductsSearchQuery(params: ProductSearchParams): string {
   const searchParams = new URLSearchParams()
 
+  // --- Solo productos activos ---
+  searchParams.append('filters[isActive][$eq]', 'true')
+
+  // --- Filtro por productos destacados ---
+  if (params.isFeatured) {
+    searchParams.append('filters[isHighlighted][$eq]', 'true')
+  }
+
   // --- Filtro por categoría ---
   if (params.category) {
     searchParams.append('filters[categories][slug][$eq]', params.category)

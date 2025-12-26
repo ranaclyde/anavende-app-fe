@@ -25,7 +25,7 @@ import useShoppingCartStore from '@/store/shoppingCart'
 const navigation = [
   { name: 'Productos', href: '/productos', current: false },
   { name: 'Categorias', href: '/categorias', current: false },
-  { name: 'Destacados', href: '/destacados', current: false },
+  { name: 'Destacados', href: '/productos?isFeatured=true', current: false },
   { name: 'Contacto', href: '/contacto', current: false },
 ]
 

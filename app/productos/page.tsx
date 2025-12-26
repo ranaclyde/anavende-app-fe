@@ -8,9 +8,10 @@ export default async function ProductsPage({
 }: {
   searchParams: { [key: string]: string | undefined }
 }) {
-  const { category, brand, sort, page } = await searchParams
+  const { isFeatured, category, brand, sort, page } = await searchParams
 
   const { products, pagination } = await getProductsService({
+    isFeatured: isFeatured === 'true',
     category,
     brand,
     page,
