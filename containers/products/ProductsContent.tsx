@@ -29,7 +29,7 @@ interface ProductsContentProps {
   pagination?: PaginationType
 }
 
-export const ProductsContent = ({
+const ProductsContent = ({
   products = [],
   pagination,
 }: ProductsContentProps) => {
@@ -161,3 +161,5 @@ export const ProductsContent = ({
     </main>
   )
 }
+
+export default ProductsContent

@@ -1,4 +1,4 @@
-import { ProductsContent } from '@/containers/products/ProductsContent'
+import ProductsContent from '@/containers/products/ProductsContent'
 import { getProductsService } from '@/services/products'
 
 const PAGE_SIZE = 12

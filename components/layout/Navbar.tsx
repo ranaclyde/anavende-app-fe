@@ -15,7 +15,6 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react'
-import { useShallow } from 'zustand/shallow'
 import clsx from 'clsx'
 
 import Container from '../ui/Container'
@@ -32,13 +31,7 @@ const navigation = [
 const Navbar = () => {
   const [cartOpen, setCartOpen] = useState(false)
   const pathname = usePathname()
-  const { shoppingCart } = useShoppingCartStore(
-    useShallow((state) => ({
-      shoppingCart: state.shoppingCart,
-    }))
-  )
-
-  console.log('Current pathname:', pathname)
+  const shoppingCart = useShoppingCartStore((state) => state.shoppingCart)
 
   return (
     <Disclosure
