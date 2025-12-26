@@ -37,3 +37,107 @@
   @apply border-r-2 border-gray-500 ml-1;
   animation: blink 0.7s steps(1) infinite;
 }
+
+/* Loader Animations */
+@layer utilities {
+  /* SVG stroke + animation helpers */
+  .cart-lines {
+    animation: cart-lines 2s ease-in-out infinite;
+    stroke: currentColor;
+  }
+
+  .cart-top {
+    animation: cart-top 2s ease-in-out infinite;
+  }
+
+  .cart-wheel-1 {
+    animation: cart-wheel-1 2s ease-in-out infinite;
+    transform-origin: 43px 111px;
+  }
+
+  .cart-wheel-2 {
+    animation: cart-wheel-2 2s ease-in-out infinite;
+    transform-origin: 102px 111px;
+  }
+
+  .cart-wheel-stroke {
+    animation: cart-wheel-stroke 2s ease-in-out infinite;
+  }
+
+  .loader-msg {
+    animation: loader-msg 0.3s 4.7s linear forwards;
+  }
+
+  .loader-msg-last {
+    animation-direction: reverse;
+    animation-delay: 5s;
+    visibility: hidden;
+  }
+}
+
+/* Keyframes */
+@keyframes loader-msg {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  99.9% {
+    opacity: 0;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes cart-lines {
+  from,
+  to {
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+}
+
+@keyframes cart-top {
+  from {
+    stroke-dashoffset: -338;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 338;
+  }
+}
+
+@keyframes cart-wheel-1 {
+  from {
+    transform: rotate(-0.25turn);
+  }
+  to {
+    transform: rotate(2.75turn);
+  }
+}
+
+@keyframes cart-wheel-2 {
+  from {
+    transform: rotate(0.25turn);
+  }
+  to {
+    transform: rotate(3.25turn);
+  }
+}
+
+@keyframes cart-wheel-stroke {
+  from,
+  to {
+    stroke-dashoffset: 81.68;
+  }
+  50% {
+    stroke-dashoffset: 40.84;
+  }
+}
