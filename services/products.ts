@@ -69,3 +69,32 @@ export async function getProductBySlugService(
 
   return product
 }
+
+export async function getFeaturedProductsService(): Promise<SimpleProduct[]> {
+  const res = await strapiQuery(
+    `products?filters[isHighlighted][$eq]=true&filters[isActive][$eq]=true&${buildProductsQuery()}&pagination[limit]=4`
+  )
+
+  let productsResponse: SimpleProduct[] = []
+
+  if (res.data || res.data.length > 0) {
+    productsResponse = res.data.map((product: SimpleProduct) => {
+      const stock =
+        product.stock?.map((stockItem) => {
+          const images = stockItem.images?.map((img) => ({
+            ...img,
+            url: getImageUrl(img.url),
+          }))
+
+          return { ...stockItem, images }
+        }) ?? []
+
+      return {
+        ...product,
+        stock,
+      }
+    })
+  }
+
+  return productsResponse
+}

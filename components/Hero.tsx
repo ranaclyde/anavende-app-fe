@@ -13,9 +13,9 @@ const Hero = () => {
         <Container tag="div" className="w-full h-full relative">
           <div className="absolute right-0 top-0 bottom-0 w-full lg:w-3/5 xl:w-1/2">
             <img
-              src="/images/setup-gamer.png"
-              alt="Gaming setup with RGB lights"
-              className="w-full h-full object-cover object-left"
+              src="/images/setup-gamer.jpg"
+              alt="Imagen de fondo de una chica jugando videojuegos"
+              className="w-full h-full object-cover object-right"
             />
             {/* Degradados suaves para integración */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#020001] via-[#020001]/80 to-transparent"></div>
