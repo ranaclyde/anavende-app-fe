@@ -62,14 +62,6 @@ export default function ProductDetailContent({ product }: Props) {
     return product.price
   }, [product.price, product.discount])
 
-  const handleQuantityChange = (action: 'increment' | 'decrement') => {
-    if (action === 'increment' && quantity < availableQuantity) {
-      setQuantity(quantity + 1)
-    } else if (action === 'decrement' && quantity > 1) {
-      setQuantity(quantity - 1)
-    }
-  }
-
   const handleStockChange = (index: number) => {
     setSelectedStockIndex(index)
     setSelectedImageIndex(0)

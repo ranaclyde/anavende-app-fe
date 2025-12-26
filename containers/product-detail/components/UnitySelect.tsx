@@ -17,7 +17,10 @@ const UnitySelect = ({
 }: UnitySelectProps) => {
   return (
     <Menu as="div" className="relative">
-      <MenuButton className="inline-flex items-center gap-1 text-hippie-blue hover:text-hippie-blue-700 font-medium transition-colors cursor-pointer">
+      <MenuButton
+        disabled={availableQuantity === 0}
+        className="inline-flex items-center gap-1 text-hippie-blue hover:text-hippie-blue-700 font-medium transition-colors cursor-pointer"
+      >
         <span>
           {quantity} {quantity === 1 ? 'unidad' : 'unidades'}
         </span>
