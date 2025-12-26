@@ -6,7 +6,7 @@ const PAGE_SIZE = 12
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined }
+  searchParams: Promise<{ [key: string]: string | undefined }>
 }) {
   const { isFeatured, category, brand, sort, page } = await searchParams
 
