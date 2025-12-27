@@ -4,17 +4,13 @@ import React, { Suspense } from 'react'
 import GridCategorias from '@/components/GridCategories'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 import Container from '@/components/ui/Container'
+import Loader from '@/components/layout/Loader'
 
 // Types
 import type { Category } from '@/interfaces/categories'
 
 interface CategoriesContentProps {
   categories: Category[]
-}
-
-// TODO: Mejorar el loader
-const Loader = () => {
-  return <div>Cargando categorias...</div>
 }
 
 const CategoriesContent = ({ categories }: CategoriesContentProps) => {
@@ -28,7 +24,7 @@ const CategoriesContent = ({ categories }: CategoriesContentProps) => {
             Descubre nuestras categorias de productos
           </p>
         </div>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader message="Cargando categorias..." />}>
           <GridCategorias categories={categories} />
         </Suspense>
         <div className="mt-8 text-center">

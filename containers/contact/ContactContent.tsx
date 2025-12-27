@@ -1,6 +1,4 @@
 'use client'
-
-import React from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   Location01Icon,

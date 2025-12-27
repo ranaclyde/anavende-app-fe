@@ -3,7 +3,7 @@ import React, { Suspense } from 'react'
 import Container from '@/components/ui/Container'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 import Faqs from '@/components/Faqs'
-import { Loader } from '@/components/layout/Loader'
+import Loader from '@/components/layout/Loader'
 
 import { FAQ } from '@/interfaces/faqs'
 

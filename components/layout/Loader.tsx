@@ -5,12 +5,12 @@ type LoaderProps = {
   fullScreen?: boolean
 }
 
-export function Loader({
+const Loader = ({
   message = 'Cargando…',
   timeoutMessage = 'Estamos tomando más tiempo de lo habitual...',
   colorClass = 'text-merlot',
   fullScreen = true,
-}: LoaderProps) {
+}: LoaderProps) => {
   return (
     <div
       className={
@@ -81,3 +81,5 @@ export function Loader({
     </div>
   )
 }
+
+export default Loader

@@ -3,7 +3,7 @@ import { BlocksRenderer } from '@strapi/blocks-react-renderer'
 
 import Container from '@/components/ui/Container'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
-import { Loader } from '@/components/layout/Loader'
+import Loader from '@/components/layout/Loader'
 
 import type { CustomPage } from '@/interfaces/customPage'
 

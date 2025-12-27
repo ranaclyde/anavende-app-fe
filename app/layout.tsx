@@ -6,13 +6,13 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import SettingsProvider from '@/components/providers/SettingsProvider'
+import Loader from '@/components/layout/Loader'
 
 // Services
 import { getSettingsService } from '@/services/settings'
 
 // Styles
 import '@/styles/globals.css'
-import { Loader } from '@/components/layout/Loader'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
