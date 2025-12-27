@@ -1,17 +1,12 @@
 'use client'
 import { useState } from 'react'
-import {
-  Search01Icon,
-  FilterIcon,
-  Cancel01Icon,
-} from '@hugeicons/core-free-icons'
+import { FilterIcon, Cancel01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
   TransitionChild,
-  Input,
 } from '@headlessui/react'
 
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
@@ -20,6 +15,7 @@ import ProductCard from '@/components/ProductCard'
 import Pagination from './components/Pagination'
 import Filters from './components/Filters'
 import SortButton from './components/SortButton'
+import SearchProductInput from './components/SearchProductInput'
 
 import { type SimpleProduct } from '@/interfaces/products'
 import { type Pagination as PaginationType } from '@/interfaces/pagination'
@@ -33,7 +29,6 @@ const ProductsContent = ({
   products = [],
   pagination,
 }: ProductsContentProps) => {
-  const [searchTerm, setSearchTerm] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -111,21 +106,7 @@ const ProductsContent = ({
             <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
               <div className="flex flex-col sm:flex-row gap-4">
                 {/* Buscador */}
-                <div className="flex-1 relative">
-                  <HugeiconsIcon
-                    icon={Search01Icon}
-                    size={20}
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Buscar productos..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 data-focus:outline-none"
-                  />
-                </div>
-
+                <SearchProductInput />
                 {/* Ordenamiento */}
                 <div className="sm:w-48">
                   <SortButton />

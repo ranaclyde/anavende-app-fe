@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react'
-import { Checkbox, Field, Label, Radio, RadioGroup } from '@headlessui/react'
+import { useEffect } from 'react'
+import { Field, Label, Radio, RadioGroup } from '@headlessui/react'
 import { useShallow } from 'zustand/shallow'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
+// Components
+import CheckboxUi from '@/components/ui/CheckboxUi'
+
+// Stores
 import useCategoryStore from '@/store/categories'
 import useBrandStore from '@/store/brands'
 
@@ -77,6 +81,16 @@ const Filters = () => {
     router.push(`${pathname}?${params.toString()}`)
   }
 
+  const handleFeaturedChange = (isFeatured: boolean) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (isFeatured) {
+      params.set('isFeatured', 'true')
+    } else {
+      params.delete('isFeatured')
+    }
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
   return (
     <>
       <div className="flex items-center justify-between mb-6">
@@ -87,6 +101,18 @@ const Filters = () => {
         >
           Limpiar todo
         </button>
+      </div>
+
+      {/* Productos destacados */}
+      <div className="mb-6">
+        <h3 className="text-sm font-medium text-gray-900 mb-3">
+          Productos destacados
+        </h3>
+        <CheckboxUi
+          checked={searchParams.get('isFeatured') === 'true'}
+          onChange={handleFeaturedChange}
+          label="Sólo destacados"
+        />
       </div>
 
       {/* Categorías */}
@@ -101,9 +127,9 @@ const Filters = () => {
               >
                 <Radio
                   value={category.slug}
-                  className="group flex size-4 items-center justify-center rounded-full border border-gray-300 bg-white data-[checked]:border-indigo-600"
+                  className="group flex size-4 items-center justify-center rounded-full border border-gray-300 bg-white data-checked:border-indigo-600"
                 >
-                  <span className="invisible size-2 rounded-full bg-indigo-600 group-data-[checked]:visible" />
+                  <span className="invisible size-2 rounded-full bg-indigo-600 group-data-checked:visible" />
                 </Radio>
                 <Label className="ml-2 text-sm text-gray-700 cursor-pointer">
                   {category.name}
@@ -119,32 +145,12 @@ const Filters = () => {
         <h3 className="text-sm font-medium text-gray-900 mb-3">Marcas</h3>
         <div className="space-y-2">
           {brands.map((brand) => (
-            <Field
+            <CheckboxUi
               key={`${brand.id}-${brand.slug}`}
-              className="flex items-center"
-            >
-              <Checkbox
-                checked={selectedBrands.includes(brand.slug)}
-                onChange={() => handleBrandChange(brand.slug)}
-                className="group block size-4 rounded border border-gray-300 bg-white data-[checked]:bg-indigo-600 data-[checked]:border-indigo-600"
-              >
-                <svg
-                  className="stroke-white opacity-0 group-data-[checked]:opacity-100"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                >
-                  <path
-                    d="m3 8 2.5 2.5L12 4"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Checkbox>
-              <Label className="ml-2 text-sm text-gray-700 cursor-pointer">
-                {brand.name}
-              </Label>
-            </Field>
+              checked={selectedBrands.includes(brand.slug)}
+              onChange={() => handleBrandChange(brand.slug)}
+              label={brand.name}
+            />
           ))}
         </div>
       </div>

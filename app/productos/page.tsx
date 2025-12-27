@@ -8,7 +8,8 @@ export default async function ProductsPage({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>
 }) {
-  const { isFeatured, category, brand, sort, page } = await searchParams
+  const { isFeatured, category, brand, sort, page, search } =
+    await searchParams
 
   const { products, pagination } = await getProductsService({
     isFeatured: isFeatured === 'true',
@@ -17,6 +18,7 @@ export default async function ProductsPage({
     page,
     pageSize: PAGE_SIZE,
     sort,
+    search,
   })
 
   return <ProductsContent products={products} pagination={pagination} />
