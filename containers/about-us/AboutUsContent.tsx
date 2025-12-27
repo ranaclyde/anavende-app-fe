@@ -17,7 +17,7 @@ const Loader = () => {
 
 const AboutUsContent = ({ aboutUs }: AboutUsContentProps) => {
   return (
-    <main>
+    <>
       <Breadcrumbs links={[{ href: '#', label: 'Acerca de Nosotros' }]} />
       <Container tag="section" className="mt-8">
         <div className="mb-4">
@@ -43,7 +43,7 @@ const AboutUsContent = ({ aboutUs }: AboutUsContentProps) => {
           </p>
         </div>
       </Container>
-    </main>
+    </>
   )
 }
 

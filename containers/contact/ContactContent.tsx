@@ -22,7 +22,7 @@ const ContactContent = () => {
   if (!settings) return null
 
   return (
-    <main>
+    <>
       <Breadcrumbs links={[{ href: '#', label: 'Contacto' }]} />
       <Container tag="section" className="mt-8 mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -204,7 +204,7 @@ const ContactContent = () => {
           </div>
         </div>
       </Container>
-    </main>
+    </>
   )
 }
 

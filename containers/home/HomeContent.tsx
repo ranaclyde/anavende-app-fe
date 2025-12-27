@@ -23,7 +23,7 @@ const HomeContent = ({
   featuredProducts,
 }: HomeContentProps) => {
   return (
-    <main>
+    <>
       <Hero />
 
       <Container tag="section">
@@ -53,7 +53,7 @@ const HomeContent = ({
           ))}
         </div>
       </Container>
-    </main>
+    </>
   )
 }
 

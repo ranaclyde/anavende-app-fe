@@ -109,7 +109,7 @@ export default function ProductDetailContent({ product }: Props) {
   }
 
   return (
-    <main>
+    <>
       <Breadcrumbs
         links={[
           { href: '/productos', label: 'Productos' },
@@ -298,6 +298,6 @@ export default function ProductDetailContent({ product }: Props) {
       </Container>
 
       <CartDrawer visible={cartOpen} onClose={() => setCartOpen(false)} />
-    </main>
+    </>
   )
 }

@@ -41,12 +41,12 @@ export default async function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <Suspense fallback={<Loader message="Cargando configuración..." />}>
           <SettingsProvider settings={settings}>
             <Navbar />
-            {children}
+            <main className="flex-1">{children}</main>
             <Footer />
           </SettingsProvider>
         </Suspense>

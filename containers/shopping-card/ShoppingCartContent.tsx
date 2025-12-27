@@ -102,7 +102,7 @@ const ShoppingCartContent = () => {
     (shippingMethod === 'delivery' && !currentShipping)
 
   return (
-    <main>
+    <>
       <Breadcrumbs links={[{ href: '#', label: 'Carrito' }]} />
 
       <Container tag="section" className="mt-8">
@@ -222,7 +222,7 @@ const ShoppingCartContent = () => {
           </div>
         )}
       </Container>
-    </main>
+    </>
   )
 }
 

@@ -3,6 +3,7 @@ import React, { Suspense } from 'react'
 import Container from '@/components/ui/Container'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 import Faqs from '@/components/Faqs'
+import { Loader } from '@/components/layout/Loader'
 
 import { FAQ } from '@/interfaces/faqs'
 
@@ -10,14 +11,9 @@ interface FaqsContentProps {
   faqs: FAQ[]
 }
 
-// TODO: Mejorar el loader
-const Loader = () => {
-  return <div>Cargando preguntas frecuentes...</div>
-}
-
 const FaqsContent = ({ faqs }: FaqsContentProps) => {
   return (
-    <main>
+    <>
       <Breadcrumbs links={[{ href: '#', label: 'Preguntas frecuentes' }]} />
       <Container tag="section" className="mt-8">
         <div className="mb-4">
@@ -29,7 +25,9 @@ const FaqsContent = ({ faqs }: FaqsContentProps) => {
             productos y servicios
           </p>
         </div>
-        <Suspense fallback={<Loader />}>
+        <Suspense
+          fallback={<Loader message="Cargando preguntas frecuentes..." />}
+        >
           <Faqs faqs={faqs} />
         </Suspense>
         <div className="mt-8 text-center">
@@ -41,7 +39,7 @@ const FaqsContent = ({ faqs }: FaqsContentProps) => {
           </p>
         </div>
       </Container>
-    </main>
+    </>
   )
 }
 

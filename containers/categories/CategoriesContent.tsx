@@ -19,7 +19,7 @@ const Loader = () => {
 
 const CategoriesContent = ({ categories }: CategoriesContentProps) => {
   return (
-    <main>
+    <>
       <Breadcrumbs links={[{ href: '#', label: 'Categorias' }]} />
       <Container tag="section" className="mt-8">
         <div>
@@ -40,7 +40,7 @@ const CategoriesContent = ({ categories }: CategoriesContentProps) => {
           </p>
         </div>
       </Container>
-    </main>
+    </>
   )
 }
 

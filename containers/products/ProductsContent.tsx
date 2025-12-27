@@ -32,7 +32,7 @@ const ProductsContent = ({
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <main>
+    <>
       <Breadcrumbs links={[{ href: '/productos', label: 'Productos' }]} />
 
       <Container tag="section" className="mt-8">
@@ -139,7 +139,7 @@ const ProductsContent = ({
           </div>
         </div>
       </Container>
-    </main>
+    </>
   )
 }
 
