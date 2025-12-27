@@ -15,7 +15,7 @@ const TitleDivider = ({ title, href, btnText }: TitleDividerProps) => {
       <span className="shrink-0 pe-4 text-black text-xl lg:text-3xl font-bold">
         {title}
       </span>
-      <span className="hidden lg:inline-block h-px flex-1 bg-gradient-to-l from-transparent to-gray-300" />
+      <span className="hidden lg:inline-block h-px flex-1 bg-linear-to-l from-transparent to-gray-300" />
       {href && btnText && (
         <LinkUi color="merlot" href={href} variant="ghost" className="ml-4">
           <span className="hidden md:inline-block">{btnText}</span>

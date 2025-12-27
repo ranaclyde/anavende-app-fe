@@ -28,7 +28,7 @@ const UnitySelect = ({
       </MenuButton>
       <MenuItems
         transition
-        className="absolute left-0 mt-2 w-48 origin-top-left rounded-lg bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0 z-10"
+        className="absolute left-0 mt-2 w-48 origin-top-left rounded-lg bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0 z-10"
       >
         <div className="p-1 max-h-60 overflow-y-auto">
           {Array.from(

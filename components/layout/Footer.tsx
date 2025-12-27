@@ -1,11 +1,20 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Facebook02Icon, InstagramIcon } from '@hugeicons/core-free-icons'
+import {
+  Facebook02Icon,
+  InstagramIcon,
+  TiktokIcon,
+} from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+
 import Container from '../ui/Container'
+import useSettingsStore from '@/store/settings'
 
 const Footer = () => {
+  const settings = useSettingsStore((state) => state.settings)
+
   return (
     <footer className="bg-gray-900 text-white mt-8 lg:mt-16">
       <Container className="py-8 lg:py-12">
@@ -25,139 +34,153 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-gray-400 text-sm">
-              We are a team of designers and developers that create high quality
-              WordPress
+              Tu tienda de confianza para productos de tecnologia y accesorios
             </p>
             <div className="flex space-x-4">
-              <Link
-                href="/"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <HugeiconsIcon
-                  icon={Facebook02Icon}
-                  size={24}
-                  color="currentColor"
-                  strokeWidth={2}
-                />
-              </Link>
-              <Link
-                href="/"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <HugeiconsIcon
-                  icon={InstagramIcon}
-                  size={24}
-                  color="currentColor"
-                  strokeWidth={2}
-                />
-              </Link>
+              {settings?.facebook && (
+                <Link
+                  href={settings.facebook}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <HugeiconsIcon
+                    icon={Facebook02Icon}
+                    size={24}
+                    color="currentColor"
+                    strokeWidth={2}
+                  />
+                </Link>
+              )}
+              {settings?.instagram && (
+                <Link
+                  href={settings.instagram}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <HugeiconsIcon
+                    icon={InstagramIcon}
+                    size={24}
+                    color="currentColor"
+                    strokeWidth={2}
+                  />
+                </Link>
+              )}
+              {settings?.tiktok && (
+                <Link
+                  href={settings.tiktok}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <HugeiconsIcon
+                    icon={TiktokIcon}
+                    size={24}
+                    color="currentColor"
+                    strokeWidth={2}
+                  />
+                </Link>
+              )}
             </div>
           </div>
           <div>
-            <h3 className="text-lg font-medium mb-4">My Account</h3>
+            <h3 className="text-lg font-medium mb-4">Enlaces</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <Link href="/" className="hover:text-white transition-colors">
-                  Track Orders
+                  Inicio
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Shipping
+                <Link
+                  href="/productos"
+                  className="hover:text-white transition-colors"
+                >
+                  Productos
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Wishlist
+                <Link
+                  href="/categorias"
+                  className="hover:text-white transition-colors"
+                >
+                  Categorias
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  My Account
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Order History
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Returns
+                <Link
+                  href="/productos?isFeatured=true"
+                  className="hover:text-white transition-colors"
+                >
+                  Destacados
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-medium mb-4">Information</h3>
+            <h3 className="text-lg font-medium mb-4">Información</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Our Story
+                <Link
+                  href="/nosotros"
+                  className="hover:text-white transition-colors"
+                >
+                  Acerca de nosotros
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Careers
+                <Link
+                  href="/terminos-y-condiciones"
+                  className="hover:text-white transition-colors"
+                >
+                  Términos y condiciones
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Privacy Policy
+                <Link
+                  href="/preguntas-frecuentes"
+                  className="hover:text-white transition-colors"
+                >
+                  Preguntas frecuentes
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Terms &amp; Conditions
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Latest News
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Contact Us
+                <Link
+                  href="/contacto"
+                  className="hover:text-white transition-colors"
+                >
+                  Contáctanos
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-medium mb-4">Talk To Us</h3>
+            <h3 className="text-lg font-medium mb-4">Habla con nosotros</h3>
             <div className="space-y-3 text-sm text-gray-400">
-              <p>Got Questions? Call us</p>
+              <p>¿Tienes preguntas? Llámanos</p>
               <Link
-                href="tel:670-413-90-762"
+                href={`tel:${settings?.phone}`}
                 className="text-white text-lg font-medium hover:text-blue-400 transition-colors block"
               >
-                +670 413 90 762
+                {settings?.phone}
               </Link>
               <div className="space-y-1">
                 <Link
-                  href="mailto:shofy@support.com"
+                  href={`mailto:${settings?.email}`}
                   className="block hover:text-white transition-colors"
                 >
-                  shofy@support.com
+                  {settings?.email}
                 </Link>
-                <Link
-                  href="/"
-                  className="block hover:text-white transition-colors"
-                >
-                  79 Sleepy Hollow St. Jamaica, New York 1432
-                </Link>
+                <p className="block hover:text-white transition-colors">
+                  Coordina una visita en Viedma, Río Negro
+                </p>
               </div>
             </div>
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
           <p>
-            © 2025 All Rights Reserved | Next js Template by{' '}
+            © 2025 AnaVende |{' '}
             <Link
-              href="/"
+              href="https://www.linkedin.com/in/emanuel-sanhueza/"
               className="text-white hover:text-blue-400 transition-colors"
             >
-              ThemePure
+              Matías Emanuel Sanhueza
             </Link>
           </p>
         </div>

@@ -2,8 +2,19 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === 'development',
     remotePatterns: [
-      new URL(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/uploads/**`),
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '1337',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'admin.anavende.com.ar',
+        pathname: '/uploads/**',
+      },
     ],
   },
 }

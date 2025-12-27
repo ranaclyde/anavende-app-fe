@@ -35,7 +35,7 @@ const ContactContent = () => {
             <div className="space-y-6">
               {/* Dirección */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
+                <div className="shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
                   <HugeiconsIcon
                     icon={Location01Icon}
                     size={24}
@@ -52,7 +52,7 @@ const ContactContent = () => {
 
               {/* Teléfono */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
+                <div className="shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
                   <HugeiconsIcon
                     icon={WhatsappBusinessIcon}
                     size={24}
@@ -72,7 +72,7 @@ const ContactContent = () => {
 
               {/* Email */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
+                <div className="shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
                   <HugeiconsIcon
                     icon={Mail01Icon}
                     size={24}
@@ -92,7 +92,7 @@ const ContactContent = () => {
 
               {/* Facebook */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
+                <div className="shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
                   <HugeiconsIcon
                     icon={FacebookIcon}
                     size={24}
@@ -114,7 +114,7 @@ const ContactContent = () => {
 
               {/* Instagram */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
+                <div className="shrink-0 w-12 h-12 bg-merlot-50 rounded-full flex items-center justify-center">
                   <HugeiconsIcon
                     icon={InstagramIcon}
                     size={24}

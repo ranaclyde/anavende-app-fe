@@ -7,7 +7,7 @@ import LinkUi from './ui/LinkUi'
 
 const Hero = () => {
   return (
-    <section className="relative isolate overflow-hidden bg-[#020001] min-h-[500px] lg:min-h-[600px]">
+    <section className="relative isolate overflow-hidden bg-[#020001] min-h-125 lg:min-h-150">
       {/* Contenedor para la imagen que respeta el ancho del sitio */}
       <div className="absolute inset-0 z-0 flex justify-end">
         <Container tag="div" className="w-full h-full relative">
@@ -18,15 +18,15 @@ const Hero = () => {
               className="w-full h-full object-cover object-right"
             />
             {/* Degradados suaves para integración */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#020001] via-[#020001]/80 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020001]/70 via-transparent to-[#020001]/30"></div>
-            <div className="absolute inset-0 bg-gradient-to-b from-[#020001]/30 via-transparent to-[#020001]/70"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-[#020001] via-[#020001]/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-[#020001]/70 via-transparent to-[#020001]/30"></div>
+            <div className="absolute inset-0 bg-linear-to-b from-[#020001]/30 via-transparent to-[#020001]/70"></div>
           </div>
         </Container>
       </div>
 
       {/* Efecto de resplandor RGB de fondo */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 via-pink-900/10 to-blue-900/10 blur-3xl z-0"></div>
+      <div className="absolute inset-0 bg-linear-to-r from-purple-900/10 via-pink-900/10 to-blue-900/10 blur-3xl z-0"></div>
 
       {/* Contenido */}
       <Container tag="div" className="relative z-10">

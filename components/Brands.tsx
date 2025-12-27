@@ -50,7 +50,7 @@ const Brands = () => {
   return (
     <section className="bg-[#F9F3F0] mt-16 py-15">
       <Container className="flex flex-wrap py-20">
-        <div className="w-full max-w-full flex-shrink-0 lg:mt-2 lg:w-1/3 lg:flex-none">
+        <div className="w-full max-w-full shrink-0 lg:mt-2 lg:w-1/3 lg:flex-none">
           <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-gray-500 xl:text-base">
             Nuestras marcas
           </h2>
@@ -67,7 +67,7 @@ const Brands = () => {
             {brands.map((brand) => (
               <div
                 key={brand.name}
-                className="w-32 h-[85px] flex items-center justify-center justify-self-center"
+                className="w-32 h-21.25 flex items-center justify-center justify-self-center"
               >
                 <Image
                   src={brand.image}

@@ -43,7 +43,7 @@ const SortButton = () => {
             <MenuItem key={option.value}>
               <button
                 onClick={() => handleStockChange(option.value)}
-                className="group flex w-full items-center px-4 py-2 text-sm text-gray-700 data-[focus]:bg-indigo-100 data-[focus]:text-indigo-900"
+                className="group flex w-full items-center px-4 py-2 text-sm text-gray-700 data-focus:bg-indigo-100 data-focus:text-indigo-900"
               >
                 {option.label}
               </button>

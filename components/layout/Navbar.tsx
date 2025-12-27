@@ -87,7 +87,7 @@ const Navbar = () => {
                   color="currentColor"
                   strokeWidth={2}
                 />
-                <span className="absolute -top-0 -right-1 bg-red-500 text-white rounded-full text-xs flex items-center justify-center h-5 w-5">
+                <span className="absolute top-0 -right-1 bg-red-500 text-white rounded-full text-xs flex items-center justify-center h-5 w-5">
                   {shoppingCart.items.reduce(
                     (total, item) => total + item.quantity,
                     0
