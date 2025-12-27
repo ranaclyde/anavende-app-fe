@@ -102,7 +102,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         </div>*/}
       </div>
 
-      <div className="p-4 flex flex-col gap-2">
+      <div className="p-2 md:p-4 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <span className="w-fit bg-hippie-blue text-white text-xs px-2.5 py-0.5 rounded-sm">
             {categoryName}

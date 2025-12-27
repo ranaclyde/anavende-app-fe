@@ -179,6 +179,8 @@ const Footer = () => {
             <Link
               href="https://www.linkedin.com/in/emanuel-sanhueza/"
               className="text-white hover:text-blue-400 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Matías Emanuel Sanhueza
             </Link>

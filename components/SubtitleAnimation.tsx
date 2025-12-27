@@ -45,7 +45,7 @@ const SubtitleAnimation = () => {
   }, [text, isDeleting, loopIndex, typingSpeed])
 
   return (
-    <h2 className="text-4xl font-semibold tracking-tight text-gray-500 sm:text-6xl">
+    <h2 className="text-4xl h-20 md:h-10 font-semibold tracking-tight text-gray-500 sm:text-6xl">
       <span>Vos elegís {text}</span>
       <span className="cursor-blink border-r-2 border-black ml-1" />
     </h2>
