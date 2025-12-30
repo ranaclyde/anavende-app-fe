@@ -1,3 +1,4 @@
+'use client'
 import { useEffect } from 'react'
 import { Field, Label, Radio, RadioGroup } from '@headlessui/react'
 import { useShallow } from 'zustand/shallow'

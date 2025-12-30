@@ -37,11 +37,9 @@ export default function Error({
           <ButtonUi color="merlot" onClick={() => reset()}>
             Intentar de nuevo
           </ButtonUi>
-          <a href="/">
-            <LinkUi color="merlot" variant="outlined" href="/">
-              Volver al inicio
-            </LinkUi>
-          </a>
+          <LinkUi color="merlot" variant="outlined" href="/">
+            Volver al inicio
+          </LinkUi>
         </div>
       </div>
     </Container>

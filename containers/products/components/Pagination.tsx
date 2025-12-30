@@ -1,9 +1,9 @@
 'use client'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
+import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 import { type Pagination as PaginationType } from '@/interfaces/pagination'
-import Link from 'next/link'
 
 interface PaginationProps {
   pagination?: PaginationType

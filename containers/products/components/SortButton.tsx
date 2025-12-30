@@ -1,4 +1,4 @@
-import React from 'react'
+'use client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { ArrowDown01Icon } from '@hugeicons/core-free-icons'
