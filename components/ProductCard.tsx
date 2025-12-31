@@ -2,8 +2,11 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 
 import type { SimpleProduct } from '@/interfaces/products'
+import { formatPrice } from '@/utils/numbers'
 
 interface Props {
   product: SimpleProduct
@@ -25,17 +28,30 @@ const ProductCard: React.FC<Props> = ({ product }) => {
       href={`/productos/${product.slug}`}
       className="group flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:shadow-lg transition-shadow"
     >
-      <div className="relative w-full aspect-square overflow-hidden rounded-t-lg">
+      <div className="relative w-full h-67.5 overflow-hidden rounded-t-lg bg-gray-100 flex items-center justify-center">
         <Image
           src={firstImage}
           alt={product.name}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          width={270}
+          height={270}
+          className="object-contain w-full h-full"
         />
+
+        {/* Icono de vista en hover - semicírculo en el centro derecha */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="bg-white rounded-l-full py-4 pl-2 shadow-lg">
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
+              size={24}
+              className="text-merlot"
+              strokeWidth={2}
+            />
+          </div>
+        </div>
 
         {/* Color swatches over image: one per stock. If a stock has multiple colors, render split circle */}
         {product.stock && product.stock.length > 0 && (
-          <div className="absolute bottom-2 left-2 z-20 bg-gray-50 rounded-md p-1 flex items-center gap-1">
+          <div className="absolute bottom-2 left-2 z-20 bg-gray-500 rounded-md p-1 flex items-center gap-1">
             {product.stock.map((stock) => {
               const colors = stock.colors ?? []
               const first = colors[0]
@@ -44,7 +60,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
               return (
                 <div
                   key={stock.id}
-                  className="w-6 h-6 rounded-full overflow-hidden border border-gray-200"
+                  className="w-4 h-4 rounded-full overflow-hidden border border-gray-200"
                 >
                   {colors.length <= 1 ? (
                     <div
@@ -68,58 +84,24 @@ const ProductCard: React.FC<Props> = ({ product }) => {
             })}
           </div>
         )}
-
-        {/* Botones de hover - corazón y carrito */}
-        {/*<div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              console.log('Añadir a favoritos')
-            }}
-            className="p-2 cursor-pointer bg-white/90 rounded-full shadow-md hover:bg-gray-50 transition-colors"
-          >
-            <HugeiconsIcon
-              icon={FavouriteIcon}
-              size={20}
-              className="text-merlot"
-              strokeWidth={1.5}
-            />
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              console.log('Añadir al carrito')
-            }}
-            className="p-2 cursor-pointer bg-[hsla(0,0%,100%,.9)] rounded-full shadow-md hover:bg-gray-50 transition-colors"
-          >
-            <HugeiconsIcon
-              icon={ShoppingCart01Icon}
-              size={20}
-              className="text-merlot"
-              strokeWidth={1.5}
-            />
-          </button>
-        </div>*/}
       </div>
 
       <div className="p-2 md:p-4 flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <span className="w-fit bg-hippie-blue text-white text-xs px-2.5 py-0.5 rounded-sm">
-            {categoryName}
-          </span>
-        </div>
-        <h5 className="text-xs sm:text-sm lg:text-base font-medium text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+        <span className="text-slate-600 text-xs">
+          {categoryName}
+        </span>
+        <h5 className="text-xs sm:text-sm text-slate-900 leading-snug">
           {product.name}
         </h5>
 
         <div className="flex items-center justify-between">
           <p>
             <span className="text-xl font-semibold text-black-900">
-              ${finalPrice.toFixed(2)}
+              {formatPrice(finalPrice)}
             </span>
             {discounted !== 0 && (
               <span className="ml-2 text-sm text-slate-500 line-through">
-                ${price.toFixed(2)}
+                {formatPrice(price)}
               </span>
             )}
           </p>

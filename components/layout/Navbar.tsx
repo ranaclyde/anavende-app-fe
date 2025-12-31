@@ -64,8 +64,8 @@ const Navbar = () => {
             ))}
           </div>
           <div className="flex items-center space-x-3">
-            <button
-              type="button"
+            <Link
+              href="/productos"
               className="text-gray-600 hover:text-gray-900 p-2 cursor-pointer"
             >
               <HugeiconsIcon
@@ -74,7 +74,7 @@ const Navbar = () => {
                 color="currentColor"
                 strokeWidth={2}
               />
-            </button>
+            </Link>
             {pathname !== '/carrito' && (
               <button
                 type="button"

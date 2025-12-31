@@ -1,4 +1,3 @@
-import React from 'react'
 import Image from 'next/image'
 
 import Container from './ui/Container'
@@ -67,14 +66,14 @@ const Brands = () => {
             {brands.map((brand) => (
               <div
                 key={brand.name}
-                className="w-32 h-21.25 flex items-center justify-center justify-self-center"
+                className="flex items-center justify-center justify-self-center w-32 h-21.25 relative"
               >
                 <Image
                   src={brand.image}
                   alt={brand.alt}
-                  width={128}
-                  height={85}
-                  className="object-cover"
+                  fill
+                  className="object-contain"
+                  sizes="128px"
                 />
               </div>
             ))}
