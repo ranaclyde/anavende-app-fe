@@ -24,6 +24,7 @@ import UnitySelect from './components/UnitySelect'
 
 import { type SimpleProduct } from '@/interfaces/products'
 import useShoppingCartStore from '@/store/shoppingCart'
+import { formatPrice } from '@/utils/numbers'
 
 interface Props {
   product: SimpleProduct
@@ -176,11 +177,11 @@ export default function ProductDetailContent({ product }: Props) {
               {/* Precio */}
               <div className="flex items-end gap-3">
                 <span className="text-4xl text-[#832833]">
-                  ${finalPrice.toFixed(2)}
+                  {formatPrice(finalPrice)}
                 </span>
                 {product.discount && product.discount > 0 ? (
                   <span className="text-lg text-gray-500 line-through">
-                    ${product.price.toFixed(2)}
+                    {formatPrice(product.price)}
                   </span>
                 ) : null}
               </div>
@@ -236,34 +237,32 @@ export default function ProductDetailContent({ product }: Props) {
                   setQuantity={setQuantity}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col space-y-2">
                 <ButtonUi
                   color="merlot"
-                  className="flex items-center justify-center gap-2 w-60"
+                  className="flex items-center justify-center gap-2 w-full md:w-60"
                   disabled={!inStock || isInCart}
                   onClick={handleBuyNow}
                 >
                   Comprar ahora
                 </ButtonUi>
-                <div className="flex items-center gap-3">
-                  <ButtonUi
-                    color="merlot"
-                    variant="outlined"
-                    className="flex items-center justify-center gap-2 w-60"
-                    disabled={!inStock}
-                    onClick={handleAddToCart}
-                  >
-                    <HugeiconsIcon
-                      icon={
-                        isInCart
-                          ? ShoppingCartFavorite02Icon
-                          : ShoppingCartAdd02Icon
-                      }
-                      size={20}
-                    />
-                    {isInCart ? 'Ver carrito' : 'Agregar al carrito'}
-                  </ButtonUi>
-                </div>
+                <ButtonUi
+                  color="merlot"
+                  variant="outlined"
+                  className="flex items-center justify-center gap-2 w-full md:w-60"
+                  disabled={!inStock}
+                  onClick={handleAddToCart}
+                >
+                  <HugeiconsIcon
+                    icon={
+                      isInCart
+                        ? ShoppingCartFavorite02Icon
+                        : ShoppingCartAdd02Icon
+                    }
+                    size={20}
+                  />
+                  {isInCart ? 'Ver carrito' : 'Agregar al carrito'}
+                </ButtonUi>
               </div>
             </div>
           </div>

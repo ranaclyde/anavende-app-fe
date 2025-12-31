@@ -78,7 +78,7 @@ const Navbar = () => {
             {pathname !== '/carrito' && (
               <button
                 type="button"
-                className="relative hidden md:block text-gray-600 hover:text-gray-900 p-2 cursor-pointer"
+                className="relative text-gray-600 hover:text-gray-900 p-2 cursor-pointer"
                 onClick={() => setCartOpen(!cartOpen)}
               >
                 <HugeiconsIcon
